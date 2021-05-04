@@ -18,7 +18,7 @@ namespace AlgoTri_TPI.States
 
             Controls.Button InsertionButton = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(150, 125),
+                Position = new Vector2(200, 200),
                 Text = "Tri par insertion",
             };
 
@@ -26,7 +26,7 @@ namespace AlgoTri_TPI.States
 
             Controls.Button BulleButton = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(150, 165),
+                Position = new Vector2(200, 250),
                 Text = "Tri a bulle",
             };
 
@@ -34,7 +34,7 @@ namespace AlgoTri_TPI.States
 
             Controls.Button SelectionButton = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(150, 205),
+                Position = new Vector2(200, 300),
                 Text = "Tri par selection",
             };
 
@@ -42,7 +42,7 @@ namespace AlgoTri_TPI.States
 
             Controls.Button PeigneButton = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(150, 245),
+                Position = new Vector2(200, 350),
                 Text = "Tri a peigne",
             };
 
@@ -50,15 +50,16 @@ namespace AlgoTri_TPI.States
 
             Controls.Button ShellButton = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(150, 285),
+                Position = new Vector2(200, 400),
                 Text = "Tri Shell",
             };
 
             ShellButton.Click += ShellButton_Click;
             
-            Controls.Button AboutButton = new Controls.Button(aboutButtonTexture, buttonFont)
+            Controls.Button AboutButton = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 285),
+                Position = new Vector2(1050, 600),
+                Text = "?"
             };
 
             AboutButton.Click += AboutButton_Click;
@@ -75,7 +76,7 @@ namespace AlgoTri_TPI.States
 
         private void InsertionButton_Click(object sender, EventArgs e)
         {
-            //_game.Exit();
+            _game.ChangeState(new InsertionState(_game, _graphicsDevice, _content));
         }
 
         private void BulleButton_Click(object sender, EventArgs e)

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoTri_TPI", "AlgoTri_TPI\AlgoTri_TPI.csproj", "{696CC2DE-CFE0-4D19-BF14-11C281ED971C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTri", "TestTri\TestTri.csproj", "{6A5AA0A2-CD37-407F-818E-838B0D7E62C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{696CC2DE-CFE0-4D19-BF14-11C281ED971C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696CC2DE-CFE0-4D19-BF14-11C281ED971C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696CC2DE-CFE0-4D19-BF14-11C281ED971C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A5AA0A2-CD37-407F-818E-838B0D7E62C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A5AA0A2-CD37-407F-818E-838B0D7E62C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A5AA0A2-CD37-407F-818E-838B0D7E62C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A5AA0A2-CD37-407F-818E-838B0D7E62C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

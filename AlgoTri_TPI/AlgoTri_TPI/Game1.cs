@@ -19,7 +19,9 @@ namespace AlgoTri_TPI
         }
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this); 
+            _graphics.PreferredBackBufferWidth = 1200;
+            _graphics.PreferredBackBufferHeight = 650;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
