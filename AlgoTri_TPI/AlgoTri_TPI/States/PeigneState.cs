@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AlgoTri_TPI.States
 {
-    public class InsertionState : State
+    public class PeigneState : State
     {
         private List<Component> _components;
         Texture2D rectangleSprite;
@@ -18,18 +18,20 @@ namespace AlgoTri_TPI.States
         private bool NeedToMove = false;
         private int[] numberMove = new int[2];
         static Random rdm = new Random();
-        
-        
-        public InsertionState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+
+
+        public PeigneState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            Tri.Insertiontri insertionTri = new Tri.Insertiontri();
+            Tri.PeigneTri insertionTri = new Tri.PeigneTri();
+
+
             Texture2D buttonTexture = _content.Load<Texture2D>("Controls/Button");
             rectangleSprite = _content.Load<Texture2D>("Controls/1px");
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
             _components = new List<Component>();
 
             _rectangles = new List<RectangleValue>();
-            #region Color
+
             _colors = new List<Color>();
 
             _colors.Add(Color.Red);
@@ -52,12 +54,11 @@ namespace AlgoTri_TPI.States
             _colors.Add(Color.Bisque);
             _colors.Add(Color.IndianRed);
             _colors.Add(Color.Linen);
-            #endregion
             afficherRectangle();
             Controls.Button SelectionButton = new Controls.Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(450, 150),
-                Text = "Tri par insertion",
+                Text = "Tri a peigne",
             };
 
             SelectionButton.Click += SelectionButton_Click;
@@ -89,8 +90,6 @@ namespace AlgoTri_TPI.States
                     component.Draw(gameTime, spriteBatch);
                 }
             }
-            spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :",new Vector2(15, 600), Color.Black);
-            spriteBatch.DrawString(buttonFont, "0",new Vector2(215, 600), Color.Red);
             spriteBatch.End();
         }
 
@@ -105,7 +104,7 @@ namespace AlgoTri_TPI.States
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             if (NeedToMove == true)
                 InvertTwoRect(_rectangles[numberMove[0]], _rectangles[numberMove[1]]);
-           
+
             foreach (Component component in _components)
             {
                 component.Update(gameTime);
@@ -124,7 +123,8 @@ namespace AlgoTri_TPI.States
             }
         }
 
-        public void InvertTwoRect(RectangleValue rt1, RectangleValue rt2) {
+        public void InvertTwoRect(RectangleValue rt1, RectangleValue rt2)
+        {
             rt1.MoveTo(rt2.StartPos);
             rt2.MoveTo(rt1.StartPos);
         }

@@ -81,20 +81,20 @@ namespace AlgoTri_TPI.States
 
         private void BulleButton_Click(object sender, EventArgs e)
         {
-            //_game.ChangeState(new LoadState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new BulleState(_game, _graphicsDevice, _content));
         }
 
         private void SelectionButton_Click(object sender, EventArgs e)
         {
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new SelectionState(_game, _graphicsDevice, _content));
         }
         private void PeigneButton_Click(object sender, EventArgs e)
         {
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new PeigneState(_game, _graphicsDevice, _content));
         }
         private void ShellButton_Click(object sender, EventArgs e)
         {
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new ShellState(_game, _graphicsDevice, _content));
         }
         private void AboutButton_Click(object sender, EventArgs e)
         {
