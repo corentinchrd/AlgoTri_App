@@ -19,7 +19,7 @@ namespace AlgoTri_TPI
 
         private Color _color;
         static Random rdm = new Random();
-        public Vector2 Position { get => _position; set => _position = value; }
+        public Vector2 Position { get => _position; private set => _position = value; }
         public int Value { get => _value; set => _value = value; }
         public Color Color { get => _color; set => _color = value; }
         public Vector2 StartPos { get => _startPos; set => _startPos = value; }
@@ -44,12 +44,19 @@ namespace AlgoTri_TPI
         public void moveRight() {
             _position.X += 5;
         }
+        public void moveDown()
+        {
+            _position.Y += 50;
+        }
+        public void moveUp()
+        {
+            _position.Y -= 50;
+        }
         public void moveLeft()
         {
             _position.X -= 5;
         }
         public Vector2 MoveTo(Vector2 PositionToGo) {
-
             if (Position.X < PositionToGo.X)
                 moveRight();
             else if (Position.X > PositionToGo.X)

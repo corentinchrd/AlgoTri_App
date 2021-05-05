@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
 namespace AlgoTri_TPI.Tri
 {
@@ -14,7 +15,6 @@ namespace AlgoTri_TPI.Tri
         {
             Random();
 
-            Sort();
         }
         public override void BestCase()
         {
@@ -65,5 +65,6 @@ namespace AlgoTri_TPI.Tri
         {
             throw new NotImplementedException();
         }
+
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AlgoTri_TPI.Affichage;
 
 namespace AlgoTri_TPI.States
 {
@@ -13,19 +14,28 @@ namespace AlgoTri_TPI.States
         private List<Component> _components;
         Texture2D rectangleSprite;
         SpriteFont buttonFont;
-        private List<RectangleValue> _rectangles;
+        public List<RectangleValue> _rectangles;
         private List<Color> _colors;
         private bool NeedToMove = false;
         private int[] numberMove = new int[2];
         static Random rdm = new Random();
-        
-        
+        private Tri.Insertiontri insertionTri;
+        private AfficherInsertion afficherInsertion;
+        private List<Position> _allPosition;
+
+        public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
+
         public InsertionState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            Tri.Insertiontri insertionTri = new Tri.Insertiontri();
+            insertionTri = new Tri.Insertiontri();
+            insertionTri.Random();
             Texture2D buttonTexture = _content.Load<Texture2D>("Controls/Button");
             rectangleSprite = _content.Load<Texture2D>("Controls/1px");
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
+            AllPosition = new List<Position>();
+
+            afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, insertionTri.Values);
+
             _components = new List<Component>();
 
             _rectangles = new List<RectangleValue>();
@@ -66,9 +76,7 @@ namespace AlgoTri_TPI.States
 
         private void SelectionButton_Click(object sender, EventArgs e)
         {
-            numberMove[0] = rdm.Next(0, 19);
-            numberMove[1] = rdm.Next(0, 19);
-            NeedToMove = true;
+           insertionTri.Sort();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -89,8 +97,8 @@ namespace AlgoTri_TPI.States
                     component.Draw(gameTime, spriteBatch);
                 }
             }
-            spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :",new Vector2(15, 600), Color.Black);
-            spriteBatch.DrawString(buttonFont, "0",new Vector2(215, 600), Color.Red);
+            spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 600), Color.Black);
+            spriteBatch.DrawString(buttonFont, "0", new Vector2(215, 600), Color.Red);
             spriteBatch.End();
         }
 
@@ -104,8 +112,9 @@ namespace AlgoTri_TPI.States
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             if (NeedToMove == true)
-                InvertTwoRect(_rectangles[numberMove[0]], _rectangles[numberMove[1]]);
-           
+            {
+                insertionTri.Sort();
+            }
             foreach (Component component in _components)
             {
                 component.Update(gameTime);
@@ -114,19 +123,27 @@ namespace AlgoTri_TPI.States
 
         public void afficherRectangle()
         {
-            int space = 45;
-            for (int i = 0; i < 20; i++)
+            _rectangles = afficherInsertion.afficherList();
+            foreach (RectangleValue rectangle in _rectangles)
             {
-                RectangleValue rt = new RectangleValue(rectangleSprite, new Vector2(152f + space * i, 350), buttonFont, i + 1, _colors[i]);
-                _components.Add(rt);
-                _rectangles.Add(rt);
-
+                _components.Add(rectangle);
             }
         }
 
-        public void InvertTwoRect(RectangleValue rt1, RectangleValue rt2) {
-            rt1.MoveTo(rt2.StartPos);
-            rt2.MoveTo(rt1.StartPos);
+        public void InvertTwoRect(RectangleValue rt1, RectangleValue rt2)
+        {
+            while(NeedToMove == true) { 
+            if (rt1.Position.X != rt2.StartPos.X)
+            {
+                _rectangles = afficherInsertion.switchTwoValues(_rectangles, _rectangles.IndexOf(rt1), _rectangles.IndexOf(rt2));
+            }
+            else
+            {
+                rt1.StartPos = rt1.Position;
+                rt2.StartPos = rt2.Position;
+                    NeedToMove = false;
+            }
+            }
         }
     }
 }
