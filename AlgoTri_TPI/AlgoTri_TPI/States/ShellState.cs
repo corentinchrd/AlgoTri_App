@@ -118,7 +118,7 @@ namespace AlgoTri_TPI.States
             int space = 45;
             for (int i = 0; i < 20; i++)
             {
-                RectangleValue rt = new RectangleValue(rectangleSprite, new Vector2(152f + space * i, 350), buttonFont, i + 1, _colors[i]);
+                RectangleValue rt = new RectangleValue(rectangleSprite, new Vector2(152f + space * i, 350), buttonFont, i + 1, _colors[i],i);
                 _components.Add(rt);
                 _rectangles.Add(rt);
 

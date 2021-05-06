@@ -15,33 +15,40 @@ namespace AlgoTri_TPI
         public int width = 40;
         public int HEIGHT = 10;
         private Vector2 _startPos;
-
+        private int _positionIndex;
 
         private Color _color;
         static Random rdm = new Random();
-        public Vector2 Position { get => _position; private set => _position = value; }
+        public Vector2 Position { get => _position; set => _position = value; }
         public int Value { get => _value; set => _value = value; }
         public Color Color { get => _color; set => _color = value; }
         public Vector2 StartPos { get => _startPos; set => _startPos = value; }
+        public int PositionIndex { get => _positionIndex; set => _positionIndex = value; }
 
-        public RectangleValue(Texture2D texture, Vector2 startPosition, SpriteFont font, int value, Color color)
+        public RectangleValue(Texture2D texture, Vector2 pos, SpriteFont font, int value, Color color, int sp)
         {
             Texture = texture;
-            Position = startPosition;
-            StartPos = startPosition;
+            Position = pos;
+            if (StartPos == new Vector2(0, 0))
+            {
+
+                StartPos = pos;
+            }
             _spriteFont = font;
             Value = value;
             Color = color;
+            PositionIndex = sp;
         }
         public override void Draw(GameTime gamteTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_spriteFont,Value.ToString(),new Vector2(Position.X + 10, Position.Y + 15),Color.Black);
+            spriteBatch.DrawString(_spriteFont, Value.ToString(), new Vector2(Position.X + 10, Position.Y + 15), Color.Black);
         }
 
         public override void Update(GameTime gameTime)
         {
         }
-        public void moveRight() {
+        public void moveRight()
+        {
             _position.X += 5;
         }
         public void moveDown()
@@ -56,12 +63,16 @@ namespace AlgoTri_TPI
         {
             _position.X -= 5;
         }
-        public Vector2 MoveTo(Vector2 PositionToGo) {
+        public void MoveTo(Vector2 PositionToGo)
+        {
             if (Position.X < PositionToGo.X)
                 moveRight();
             else if (Position.X > PositionToGo.X)
                 moveLeft();
-            return StartPos;
+        }
+        public void UpdatePos(int p)
+        {
+            Position = new Vector2(p, Position.Y);
         }
     }
 }

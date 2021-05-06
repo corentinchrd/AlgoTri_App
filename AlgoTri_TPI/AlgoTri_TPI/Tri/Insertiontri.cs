@@ -59,6 +59,7 @@ namespace AlgoTri_TPI.Tri
                .OrderBy(x => Guid.NewGuid())   // ordonné par rapport à un guid,
                .ToList();
 
+            addValuesToPos();
         }
         public override void WorstCase()
         {

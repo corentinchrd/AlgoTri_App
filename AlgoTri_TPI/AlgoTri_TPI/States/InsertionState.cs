@@ -16,28 +16,31 @@ namespace AlgoTri_TPI.States
         SpriteFont buttonFont;
         public List<RectangleValue> _rectangles;
         private List<Color> _colors;
-        private bool NeedToMove = false;
-        private int[] numberMove = new int[2];
-        static Random rdm = new Random();
         private Tri.Insertiontri insertionTri;
         private AfficherInsertion afficherInsertion;
         private List<Position> _allPosition;
-
         public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
 
+        public List<int> tableauPosition;
         public InsertionState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            insertionTri = new Tri.Insertiontri();
-            insertionTri.Random();
             Texture2D buttonTexture = _content.Load<Texture2D>("Controls/Button");
             rectangleSprite = _content.Load<Texture2D>("Controls/1px");
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
+
+            insertionTri = new Tri.Insertiontri();
+            insertionTri.Random();
+            insertionTri.Sort();
             AllPosition = new List<Position>();
+            AllPosition = insertionTri._lp;
 
-            afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, insertionTri.Values);
-
+            tableauPosition = new List<int>();
+            for (int i = 0; i < 20; i++)
+            {
+                tableauPosition.Add(152 + i * 45);
+            }
+            afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, AllPosition, this);
             _components = new List<Component>();
-
             _rectangles = new List<RectangleValue>();
             #region Color
             _colors = new List<Color>();
@@ -63,20 +66,35 @@ namespace AlgoTri_TPI.States
             _colors.Add(Color.IndianRed);
             _colors.Add(Color.Linen);
             #endregion
+
+
             afficherRectangle();
-            Controls.Button SelectionButton = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button etapeSuivant = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(450, 150),
-                Text = "Tri par insertion",
+                Position = new Vector2(450, 550),
+                Text = "Etape precedente",
             };
 
-            SelectionButton.Click += SelectionButton_Click;
-            _components.Add(SelectionButton);
+            etapeSuivant.Click += SelectionButton_Click;
+            _components.Add(etapeSuivant);
+
+            Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(750, 550),
+                Text = "Etape suivante",
+            };
+
+            etapeSuivante.Click += EtapeSuivant_Click;
+            _components.Add(etapeSuivante);
         }
 
         private void SelectionButton_Click(object sender, EventArgs e)
         {
-           insertionTri.Sort();
+            _rectangles = afficherInsertion.AfficherPrevPos();
+        }
+        private void EtapeSuivant_Click(object sender, EventArgs e)
+        {
+            _rectangles = afficherInsertion.AfficherNextPos();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -104,45 +122,24 @@ namespace AlgoTri_TPI.States
 
         public override void PostUpdate(GameTime gameTime)
         {
-            // Remove sprites if they're not needed
+
         }
 
         public override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
-            if (NeedToMove == true)
-            {
-                insertionTri.Sort();
-            }
             foreach (Component component in _components)
             {
                 component.Update(gameTime);
             }
         }
-
         public void afficherRectangle()
         {
             _rectangles = afficherInsertion.afficherList();
             foreach (RectangleValue rectangle in _rectangles)
             {
                 _components.Add(rectangle);
-            }
-        }
-
-        public void InvertTwoRect(RectangleValue rt1, RectangleValue rt2)
-        {
-            while(NeedToMove == true) { 
-            if (rt1.Position.X != rt2.StartPos.X)
-            {
-                _rectangles = afficherInsertion.switchTwoValues(_rectangles, _rectangles.IndexOf(rt1), _rectangles.IndexOf(rt2));
-            }
-            else
-            {
-                rt1.StartPos = rt1.Position;
-                rt2.StartPos = rt2.Position;
-                    NeedToMove = false;
-            }
             }
         }
     }
