@@ -14,20 +14,21 @@ namespace AlgoTri_TPI.States
         private List<Component> _components;
         Texture2D rectangleSprite;
         SpriteFont buttonFont;
-        public List<RectangleValue> _rectangles;
-        private List<Color> _colors;
+        private List<RectangleValue> _rectangles;
         private Tri.Insertiontri insertionTri;
         private AfficherInsertion afficherInsertion;
         private List<Position> _allPosition;
+        List<EtapeImage> EtapeList;
+        int etape;
         public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
-
+        public List<RectangleValue> Rectangles { get => _rectangles; set => _rectangles = value; }
         public List<int> tableauPosition;
         public InsertionState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("Controls/Button");
             rectangleSprite = _content.Load<Texture2D>("Controls/1px");
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
-
+            EtapeList = new List<EtapeImage>();
             insertionTri = new Tri.Insertiontri();
             insertionTri.Random();
             insertionTri.Sort();
@@ -41,37 +42,11 @@ namespace AlgoTri_TPI.States
             }
             afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, AllPosition, this);
             _components = new List<Component>();
-            _rectangles = new List<RectangleValue>();
-            #region Color
-            _colors = new List<Color>();
+            Rectangles = new List<RectangleValue>();
 
-            _colors.Add(Color.Red);
-            _colors.Add(Color.Green);
-            _colors.Add(Color.Blue);
-            _colors.Add(Color.Yellow);
-            _colors.Add(Color.YellowGreen);
-            _colors.Add(Color.GreenYellow);
-            _colors.Add(Color.Black);
-            _colors.Add(Color.White);
-            _colors.Add(Color.Gold);
-            _colors.Add(Color.LightCoral);
-            _colors.Add(Color.Pink);
-            _colors.Add(Color.Coral);
-            _colors.Add(Color.Purple);
-            _colors.Add(Color.DarkRed);
-            _colors.Add(Color.Brown);
-            _colors.Add(Color.DeepPink);
-            _colors.Add(Color.DarkBlue);
-            _colors.Add(Color.Bisque);
-            _colors.Add(Color.IndianRed);
-            _colors.Add(Color.Linen);
-            #endregion
-
-
-            afficherRectangle();
             Controls.Button etapeSuivant = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(450, 550),
+                Position = new Vector2(450, 650),
                 Text = "Etape precedente",
             };
 
@@ -80,26 +55,57 @@ namespace AlgoTri_TPI.States
 
             Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(750, 550),
+                Position = new Vector2(750, 650),
                 Text = "Etape suivante",
             };
 
             etapeSuivante.Click += EtapeSuivant_Click;
+
             _components.Add(etapeSuivante);
+            EtapeImage etapeImage1 = new EtapeImage(content.Load<Texture2D>("Sprites/1"), new Vector2(200, 450), 0.5f * 2);
+            EtapeImage etapeImage2 = new EtapeImage(content.Load<Texture2D>("Sprites/2"), new Vector2(200, 470), 0.5f);
+            EtapeImage etapeImage3 = new EtapeImage(content.Load<Texture2D>("Sprites/3"), new Vector2(200, 490), 0.5f);
+            EtapeImage etapeImage4 = new EtapeImage(content.Load<Texture2D>("Sprites/4"), new Vector2(200, 510), 0.5f);
+
+            EtapeList.Add(etapeImage1);
+            EtapeList.Add(etapeImage2);
+            EtapeList.Add(etapeImage3);
+            EtapeList.Add(etapeImage4);
+            _components.Add(etapeImage1);
+            _components.Add(etapeImage2);
+            _components.Add(etapeImage3);
+            _components.Add(etapeImage4);
+            afficherRectangle();
         }
 
         private void SelectionButton_Click(object sender, EventArgs e)
         {
-            _rectangles = afficherInsertion.AfficherPrevPos();
+            if (etape > 0)
+            {
+                etape--;
+                EtapeList[etape + 1].opacity = EtapeList[etape + 1].opacity / 2;
+
+                EtapeList[etape].opacity = EtapeList[etape].opacity * 2;
+            }
+            Rectangles = afficherInsertion.AfficherPrevPos();
+
         }
         private void EtapeSuivant_Click(object sender, EventArgs e)
         {
-            _rectangles = afficherInsertion.AfficherNextPos();
+            if (etape + 1 <= EtapeList.Count - 1)
+            {
+                etape++;
+                EtapeList[etape - 1].opacity = EtapeList[etape - 1].opacity / 2;
+                EtapeList[etape].opacity = EtapeList[etape].opacity * 2;
+
+            }
+            Rectangles = afficherInsertion.AfficherNextPos();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
             foreach (var component in _components)
             {
                 if (component is RectangleValue)
@@ -115,18 +121,20 @@ namespace AlgoTri_TPI.States
                     component.Draw(gameTime, spriteBatch);
                 }
             }
-            spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 600), Color.Black);
-            spriteBatch.DrawString(buttonFont, "0", new Vector2(215, 600), Color.Red);
+            spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 750), Color.Black);
+            spriteBatch.DrawString(buttonFont, "0", new Vector2(215, 750), Color.Red);
             spriteBatch.End();
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-
+            //destroy object when needed
         }
 
         public override void Update(GameTime gameTime)
         {
+
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
             foreach (Component component in _components)
@@ -136,8 +144,8 @@ namespace AlgoTri_TPI.States
         }
         public void afficherRectangle()
         {
-            _rectangles = afficherInsertion.afficherList();
-            foreach (RectangleValue rectangle in _rectangles)
+            Rectangles = afficherInsertion.afficherList();
+            foreach (RectangleValue rectangle in Rectangles)
             {
                 _components.Add(rectangle);
             }

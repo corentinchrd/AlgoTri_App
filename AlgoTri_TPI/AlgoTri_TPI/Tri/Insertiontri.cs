@@ -43,7 +43,8 @@ namespace AlgoTri_TPI.Tri
 
         public override void BestCase()
         {
-            throw new NotImplementedException();
+            Values = Enumerable.Range(1, 20).ToList();
+            addValuesToPos();
         }
 
         public override void NextStep()
@@ -53,8 +54,6 @@ namespace AlgoTri_TPI.Tri
 
         public override void Random()
         {
-
-
             Values = Enumerable.Range(1, 20)     // la plage de nombres dans ta collection,
                .OrderBy(x => Guid.NewGuid())   // ordonné par rapport à un guid,
                .ToList();
@@ -63,7 +62,8 @@ namespace AlgoTri_TPI.Tri
         }
         public override void WorstCase()
         {
-            throw new NotImplementedException();
+            Values = Enumerable.Range(1, 20).Reverse().ToList();
+            addValuesToPos();
         }
         public bool isSort()
         {

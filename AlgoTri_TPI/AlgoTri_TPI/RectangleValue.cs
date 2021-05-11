@@ -18,12 +18,14 @@ namespace AlgoTri_TPI
         private int _positionIndex;
 
         private Color _color;
+        private bool isSelected;
         static Random rdm = new Random();
         public Vector2 Position { get => _position; set => _position = value; }
         public int Value { get => _value; set => _value = value; }
         public Color Color { get => _color; set => _color = value; }
         public Vector2 StartPos { get => _startPos; set => _startPos = value; }
         public int PositionIndex { get => _positionIndex; set => _positionIndex = value; }
+        public bool IsSelected { get => isSelected; set => isSelected = value; }
 
         public RectangleValue(Texture2D texture, Vector2 pos, SpriteFont font, int value, Color color, int sp)
         {
@@ -38,10 +40,14 @@ namespace AlgoTri_TPI
             Value = value;
             Color = color;
             PositionIndex = sp;
+            IsSelected = false;
         }
         public override void Draw(GameTime gamteTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_spriteFont, Value.ToString(), new Vector2(Position.X + 10, Position.Y + 15), Color.Black);
+            if (IsSelected == false)
+                spriteBatch.DrawString(_spriteFont, Value.ToString(), new Vector2(Position.X + 10, Position.Y + 15), Color.Black);
+            else
+                spriteBatch.DrawString(_spriteFont, Value.ToString(), new Vector2(Position.X + 10, Position.Y + 15), Color.Red);
         }
 
         public override void Update(GameTime gameTime)

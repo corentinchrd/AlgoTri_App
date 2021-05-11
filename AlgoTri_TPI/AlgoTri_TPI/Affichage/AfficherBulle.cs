@@ -10,23 +10,23 @@ using AlgoTri_TPI.States;
 
 namespace AlgoTri_TPI.Affichage
 {
-    class AfficherInsertion : AffichageTri
+    class AfficherBulle : AffichageTri
     {
         List<RectangleValue> rectangleValues;
         Texture2D rectangleSprite;
         SpriteFont font;
         List<Color> _colors;
         List<Position> positions;
-        InsertionState insertionState;
+        BulleState bulleState;
 
         public int currentState = 0;
-        public AfficherInsertion(Texture2D rS, SpriteFont f, List<Position> p, InsertionState ist)
+        public AfficherBulle(Texture2D rS, SpriteFont f, List<Position> p, BulleState ist)
         {
             rectangleValues = new List<RectangleValue>();
             rectangleSprite = rS;
             font = f;
             positions = p;
-            insertionState = ist;
+            bulleState = ist;
             #region Colors
             _colors = new List<Color>();
 
@@ -56,7 +56,7 @@ namespace AlgoTri_TPI.Affichage
         {
             for (int i = 0; i < 20; i++)
             {
-                RectangleValue rt = new RectangleValue(rectangleSprite, new Vector2(insertionState.tableauPosition[i], 350), font, positions[0].position[i], _colors[i], i);
+                RectangleValue rt = new RectangleValue(rectangleSprite, new Vector2(bulleState.tableauPosition[i], 350), font, positions[0].position[i], _colors[i], i);
                 rectangleValues.Add(rt);
             }
             rectangleValues[0].IsSelected = true;
@@ -89,7 +89,7 @@ namespace AlgoTri_TPI.Affichage
         }
         public List<RectangleValue> AfficherNextPos()
         {
-            if (currentState != 20)
+            if (currentState != bulleState.AllPosition.Count() - 1)
             {
                 currentState++;
             }
@@ -102,7 +102,7 @@ namespace AlgoTri_TPI.Affichage
             foreach (var item in kvp)
             {
                 rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(insertionState.tableauPosition[item.Key]);
+                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(bulleState.tableauPosition[item.Key]);
 
             }
             for (int i = 0; i < rectangleValues.Count(); i++)
@@ -128,7 +128,7 @@ namespace AlgoTri_TPI.Affichage
             foreach (var item in kvp)
             {
                 rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(insertionState.tableauPosition[item.Key]);
+                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(bulleState.tableauPosition[item.Key]);
 
             }
             for (int i = 0; i < rectangleValues.Count(); i++)
