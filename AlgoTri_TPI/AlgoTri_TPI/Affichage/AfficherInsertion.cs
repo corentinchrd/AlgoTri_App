@@ -19,7 +19,7 @@ namespace AlgoTri_TPI.Affichage
         List<Position> positions;
         InsertionState insertionState;
 
-        public int currentState = 0;
+        public int currentState = 1;
         public AfficherInsertion(Texture2D rS, SpriteFont f, List<Position> p, InsertionState ist)
         {
             rectangleValues = new List<RectangleValue>();
@@ -93,7 +93,6 @@ namespace AlgoTri_TPI.Affichage
             {
                 currentState++;
             }
-            List<RectangleValue> tmpList = rectangleValues;
             List<int> old = positions[currentState - 1].position;
             List<int> newPos = positions[currentState].position;
 
@@ -114,32 +113,63 @@ namespace AlgoTri_TPI.Affichage
             }
             return rectangleValues;
         }
-        public List<RectangleValue> AfficherPrevPos()
+        //public List<RectangleValue> AfficherPrevPos()
+        //{
+        //    if (currentState != 0)
+        //    {
+        //        currentState--;
+        //    }
+        //    List<int> old = positions[currentState + 1].position;
+        //    List<int> newPos = positions[currentState].position;
+
+        //    Dictionary<int, int> kvp = compareTwoList(old, newPos);
+
+        //    foreach (var item in kvp)
+        //    {
+        //        rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
+        //        rectangleValues.Find(x => x.Value == item.Value).UpdatePos(insertionState.tableauPosition[item.Key]);
+
+        //    }
+        //    for (int i = 0; i < rectangleValues.Count(); i++)
+        //    {
+        //        if (i == currentState)
+        //            rectangleValues[i].IsSelected = true;
+        //        else
+        //            rectangleValues[i].IsSelected = false;
+        //    }
+
+        //    return rectangleValues;
+        //}
+        public List<RectangleValue> AfficherNextPosAndState()
         {
-            if (currentState != 0)
-            {
-                currentState--;
-            }
-            List<int> old = positions[currentState + 1].position;
+            List<int> old = positions[currentState - 1].position;
             List<int> newPos = positions[currentState].position;
 
             Dictionary<int, int> kvp = compareTwoList(old, newPos);
 
-            foreach (var item in kvp)
+            if (insertionState.etape == 1)
             {
-                rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(insertionState.tableauPosition[item.Key]);
-
+                rectangleValues[currentState - 1].moveDown();
             }
-            for (int i = 0; i < rectangleValues.Count(); i++)
+            else
             {
-                if (i == currentState)
-                    rectangleValues[i].IsSelected = true;
-                else
-                    rectangleValues[i].IsSelected = false;
+                foreach (var item in kvp)
+                {
+                    if (item.Value != rectangleValues[insertionState.etape].Value)
+                    {
+                        rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
+                        rectangleValues.Find(x => x.Value == item.Value).UpdatePos(insertionState.tableauPosition[item.Key]);
+                    }
+                    else
+                    {
+                        rectangleValues[insertionState.etape].PositionIndex = item.Key;
+                        rectangleValues[insertionState.etape].UpdatePos(insertionState.tableauPosition[item.Key]);
+                    }
+                }
+                rectangleValues[currentState - 1].moveUp();
             }
-
             return rectangleValues;
+
         }
     }
 }

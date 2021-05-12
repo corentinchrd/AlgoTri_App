@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AlgoTri_TPI
 {
-    class EtapeImage : Component
+    public class EtapeImage : Component
     {
         Vector2 position;
         public float opacity;

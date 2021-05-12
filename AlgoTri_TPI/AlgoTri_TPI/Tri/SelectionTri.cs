@@ -19,19 +19,18 @@ namespace AlgoTri_TPI.Tri
         }
         public override void Sort()
         {
-            int min, temp;
-            for (int i = 0; i < 20 - 1; i++)
+            int i, min, j, x;
+            for (i = 0; i < Values.Count - 1; i++)
             {
                 min = i;
-                for (int j = i + 1; j < 20; j++)
+                for (j = i + 1; j < Values.Count; j++)
                     if (Values[j] < Values[min])
                         min = j;
                 if (min != i)
                 {
-                    //échanger t[i] et t[min]
-                    temp = Values[i];
+                    x = Values[i];
                     Values[i] = Values[min];
-                    Values[min] = temp;
+                    Values[min] = x;
                 }
             }
         }

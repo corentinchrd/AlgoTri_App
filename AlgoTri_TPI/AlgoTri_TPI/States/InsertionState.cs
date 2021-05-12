@@ -18,14 +18,16 @@ namespace AlgoTri_TPI.States
         private Tri.Insertiontri insertionTri;
         private AfficherInsertion afficherInsertion;
         private List<Position> _allPosition;
-        List<EtapeImage> EtapeList;
-        int etape;
+        public List<EtapeImage> EtapeList;
+        public int etape;
         public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
         public List<RectangleValue> Rectangles { get => _rectangles; set => _rectangles = value; }
         public List<int> tableauPosition;
+        Texture2D buttonTexture;
+        int speed = 0;
         public InsertionState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            Texture2D buttonTexture = _content.Load<Texture2D>("Controls/Button");
+            buttonTexture = _content.Load<Texture2D>("Controls/Button");
             rectangleSprite = _content.Load<Texture2D>("Controls/1px");
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
             EtapeList = new List<EtapeImage>();
@@ -34,8 +36,8 @@ namespace AlgoTri_TPI.States
             insertionTri.Sort();
             AllPosition = new List<Position>();
             AllPosition = insertionTri._lp;
-
             tableauPosition = new List<int>();
+            etape = 1;
             for (int i = 0; i < 20; i++)
             {
                 tableauPosition.Add(152 + i * 45);
@@ -44,14 +46,14 @@ namespace AlgoTri_TPI.States
             _components = new List<Component>();
             Rectangles = new List<RectangleValue>();
 
-            Controls.Button etapeSuivant = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button Vitesse = new Controls.Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(450, 650),
-                Text = "Etape precedente",
+                Text = "Vitesse",
             };
 
-            etapeSuivant.Click += SelectionButton_Click;
-            _components.Add(etapeSuivant);
+            Vitesse.Click += VitesseButton_Click;
+            _components.Add(Vitesse);
 
             Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
             {
@@ -62,8 +64,8 @@ namespace AlgoTri_TPI.States
             etapeSuivante.Click += EtapeSuivant_Click;
 
             _components.Add(etapeSuivante);
-            EtapeImage etapeImage1 = new EtapeImage(content.Load<Texture2D>("Sprites/1"), new Vector2(200, 450), 0.5f * 2);
-            EtapeImage etapeImage2 = new EtapeImage(content.Load<Texture2D>("Sprites/2"), new Vector2(200, 470), 0.5f);
+            EtapeImage etapeImage1 = new EtapeImage(content.Load<Texture2D>("Sprites/1"), new Vector2(200, 450), 0.5f);
+            EtapeImage etapeImage2 = new EtapeImage(content.Load<Texture2D>("Sprites/2"), new Vector2(200, 470), 0.5f * 2);
             EtapeImage etapeImage3 = new EtapeImage(content.Load<Texture2D>("Sprites/3"), new Vector2(200, 490), 0.5f);
             EtapeImage etapeImage4 = new EtapeImage(content.Load<Texture2D>("Sprites/4"), new Vector2(200, 510), 0.5f);
 
@@ -78,28 +80,118 @@ namespace AlgoTri_TPI.States
             afficherRectangle();
         }
 
-        private void SelectionButton_Click(object sender, EventArgs e)
+        private void VitesseButton_Click(object sender, EventArgs e)
         {
-            if (etape > 0)
+            Controls.Button PasAPas = new Controls.Button(buttonTexture, buttonFont)
             {
-                etape--;
-                EtapeList[etape + 1].opacity = EtapeList[etape + 1].opacity / 2;
+                Position = new Vector2(450, 650),
+                Text = "Pas a Pas",
+            };
 
-                EtapeList[etape].opacity = EtapeList[etape].opacity * 2;
+            PasAPas.Click += PasAPasButton_Click;
+            _components.Add(PasAPas);
+
+            Controls.Button TresLent = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(450, 650),
+                Text = "Tres lent",
+            };
+
+            PasAPas.Click += PasAPasButton_Click;
+            _components.Add(TresLent);
+
+            Controls.Button Lent = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(450, 650),
+                Text = "Lent",
+            };
+
+            PasAPas.Click += PasAPasButton_Click;
+            _components.Add(Lent);
+
+            Controls.Button Normal = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(450, 650),
+                Text = "Normal",
+            };
+
+            PasAPas.Click += PasAPasButton_Click;
+            _components.Add(Normal);
+            Controls.Button Rapide = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(450, 650),
+                Text = "Rapide",
+            };
+
+            PasAPas.Click += PasAPasButton_Click;
+            _components.Add(Rapide);
+
+        }
+
+        private void PasAPasButton_Click(object sender, EventArgs e)
+        {
+            Controls.Button b = sender as Controls.Button;
+
+            switch (b.Text)
+            {
+                case "Pas a pas":
+                    speed = 0;
+                    RemoveAllButton();
+                    break;
+                case "Tres lent":
+                    speed = 1;
+                    RemoveAllButton();
+                    break;
+                case "Lent":
+                    speed = 2;
+                    RemoveAllButton();
+                    break;
+                case "Normal":
+                    speed = 3;
+                    RemoveAllButton();
+                    break;
+                case "Rapide":
+                    speed = 4;
+                    RemoveAllButton();
+                    break;
             }
-            Rectangles = afficherInsertion.AfficherPrevPos();
-
+        }
+        public void RemoveAllButton() {
+            foreach (Controls.Button item in _components)
+            {
+                if (item.Text == "Pas a pas" || item.Text == "Tres lent" || item.Text == "Lent" || item.Text == "Normal" || item.Text == "Rapide") {
+                    _components.Remove(item);
+                }
+            }
+            
         }
         private void EtapeSuivant_Click(object sender, EventArgs e)
         {
-            if (etape + 1 <= EtapeList.Count - 1)
-            {
-                etape++;
-                EtapeList[etape - 1].opacity = EtapeList[etape - 1].opacity / 2;
-                EtapeList[etape].opacity = EtapeList[etape].opacity * 2;
 
+            if (etape == 2)
+            {
+
+                if (afficherInsertion.currentState != 21)
+                {
+                    EtapeList[etape].opacity = EtapeList[etape].opacity / 2;
+                    EtapeList[etape - 1].opacity = EtapeList[etape - 1].opacity * 2;
+                    Rectangles = afficherInsertion.AfficherNextPosAndState();
+                    etape--;
+                    afficherInsertion.currentState++;
+                }
             }
-            Rectangles = afficherInsertion.AfficherNextPos();
+            else if (etape == 1)
+            {
+                if (afficherInsertion.currentState != 21)
+                {
+                    EtapeList[etape].opacity = EtapeList[etape].opacity / 2;
+                    EtapeList[etape + 1].opacity = EtapeList[etape + 1].opacity * 2;
+                    Rectangles = afficherInsertion.AfficherNextPosAndState();
+
+                    etape++;
+                }
+            }
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
