@@ -55,7 +55,7 @@ namespace AlgoTri_TPI
         }
         public void moveRight()
         {
-            _position.X += 5;
+            _position.X += 1;
         }
         public void moveDown()
         {
@@ -67,14 +67,19 @@ namespace AlgoTri_TPI
         }
         public void moveLeft()
         {
-            _position.X -= 5;
+            _position.X -= 1;
         }
-        public void MoveTo(Vector2 PositionToGo)
+        public bool MoveTo(Vector2 PositionToGo)
         {
             if (Position.X < PositionToGo.X)
                 moveRight();
             else if (Position.X > PositionToGo.X)
                 moveLeft();
+
+            if (Position.X == PositionToGo.X) {
+                return true;
+            }
+            return false;
         }
         public void UpdatePos(int p)
         {

@@ -20,6 +20,7 @@ namespace AlgoTri_TPI.States
         private List<Position> _allPosition;
         public List<EtapeImage> EtapeList;
         public int etape;
+        public int compteur = 0;
         public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
         public List<RectangleValue> Rectangles { get => _rectangles; set => _rectangles = value; }
         public List<int> tableauPosition;
@@ -32,8 +33,6 @@ namespace AlgoTri_TPI.States
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
             EtapeList = new List<EtapeImage>();
             insertionTri = new Tri.Insertiontri();
-            insertionTri.Random();
-            insertionTri.Sort();
             AllPosition = new List<Position>();
             AllPosition = insertionTri._lp;
             tableauPosition = new List<int>();
@@ -42,28 +41,94 @@ namespace AlgoTri_TPI.States
             {
                 tableauPosition.Add(152 + i * 45);
             }
+
             afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, AllPosition, this);
             _components = new List<Component>();
             Rectangles = new List<RectangleValue>();
 
-            Controls.Button Vitesse = new Controls.Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(450, 650),
-                Text = "Vitesse",
-            };
-
-            Vitesse.Click += VitesseButton_Click;
-            _components.Add(Vitesse);
-
+            #region Button
             Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(750, 650),
+                Position = new Vector2(1100, 750),
                 Text = "Etape suivante",
             };
+            Controls.Button PasAPas = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(200, 100),
+                Text = "Pas a Pas",
+            };
 
+            PasAPas.Click += PasAPasButton_Click;
+            _components.Add(PasAPas);
+
+            Controls.Button TresLent = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(400, 100),
+                Text = "Tres lent",
+            };
+
+            TresLent.Click += PasAPasButton_Click;
+            _components.Add(TresLent);
+
+            Controls.Button Lent = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(600, 100),
+                Text = "Lent",
+            };
+
+            Lent.Click += PasAPasButton_Click;
+            _components.Add(Lent);
+
+            Controls.Button Normal = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(800, 100),
+                Text = "Normal",
+            };
+
+            Normal.Click += PasAPasButton_Click;
+            _components.Add(Normal);
+            Controls.Button Rapide = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(1000, 100),
+                Text = "Rapide",
+            };
+
+            Rapide.Click += PasAPasButton_Click;
+            _components.Add(Rapide);
+
+            Controls.Button Random = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(700, 600),
+                Text = "Random",
+            };
+
+            Random.Click += Random_Click;
+            _components.Add(Random);
+
+            Controls.Button BestCase = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(900, 600),
+                Text = "Meilleur cas",
+            };
+
+            BestCase.Click += BestCase_Click;
+            _components.Add(BestCase);
+
+            Controls.Button WorstCase = new Controls.Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(1100, 600),
+                Text = "Pire cas",
+            };
+
+            WorstCase.Click += WorstCase_Click;
+            _components.Add(WorstCase);
             etapeSuivante.Click += EtapeSuivant_Click;
 
             _components.Add(etapeSuivante);
+
+            #endregion
+
+            #region Etape
             EtapeImage etapeImage1 = new EtapeImage(content.Load<Texture2D>("Sprites/1"), new Vector2(200, 450), 0.5f);
             EtapeImage etapeImage2 = new EtapeImage(content.Load<Texture2D>("Sprites/2"), new Vector2(200, 470), 0.5f * 2);
             EtapeImage etapeImage3 = new EtapeImage(content.Load<Texture2D>("Sprites/3"), new Vector2(200, 490), 0.5f);
@@ -77,55 +142,34 @@ namespace AlgoTri_TPI.States
             _components.Add(etapeImage2);
             _components.Add(etapeImage3);
             _components.Add(etapeImage4);
-            afficherRectangle();
+            #endregion
         }
 
-        private void VitesseButton_Click(object sender, EventArgs e)
+        private void WorstCase_Click(object sender, EventArgs e)
         {
-            Controls.Button PasAPas = new Controls.Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(450, 650),
-                Text = "Pas a Pas",
-            };
+            insertionTri = new Tri.Insertiontri();
+            insertionTri.WorstCase();
+            insertionTri.Sort();
+            AllPosition = insertionTri._lp;
+            afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
+        }
 
-            PasAPas.Click += PasAPasButton_Click;
-            _components.Add(PasAPas);
+        private void BestCase_Click(object sender, EventArgs e)
+        {
+            insertionTri = new Tri.Insertiontri();
+            insertionTri.BestCase();
+            insertionTri.Sort();
+            AllPosition = insertionTri._lp;
+            afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
+        }
 
-            Controls.Button TresLent = new Controls.Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(450, 650),
-                Text = "Tres lent",
-            };
-
-            PasAPas.Click += PasAPasButton_Click;
-            _components.Add(TresLent);
-
-            Controls.Button Lent = new Controls.Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(450, 650),
-                Text = "Lent",
-            };
-
-            PasAPas.Click += PasAPasButton_Click;
-            _components.Add(Lent);
-
-            Controls.Button Normal = new Controls.Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(450, 650),
-                Text = "Normal",
-            };
-
-            PasAPas.Click += PasAPasButton_Click;
-            _components.Add(Normal);
-            Controls.Button Rapide = new Controls.Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(450, 650),
-                Text = "Rapide",
-            };
-
-            PasAPas.Click += PasAPasButton_Click;
-            _components.Add(Rapide);
-
+        private void Random_Click(object sender, EventArgs e)
+        {
+            insertionTri = new Tri.Insertiontri();
+            insertionTri.Random();
+            insertionTri.Sort();
+            AllPosition = insertionTri._lp;
+            afficherInsertion = new AfficherInsertion(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
         }
 
         private void PasAPasButton_Click(object sender, EventArgs e)
@@ -134,50 +178,32 @@ namespace AlgoTri_TPI.States
 
             switch (b.Text)
             {
-                case "Pas a pas":
+                case "Pas a Pas":
                     speed = 0;
-                    RemoveAllButton();
                     break;
                 case "Tres lent":
                     speed = 1;
-                    RemoveAllButton();
                     break;
                 case "Lent":
                     speed = 2;
-                    RemoveAllButton();
                     break;
                 case "Normal":
                     speed = 3;
-                    RemoveAllButton();
                     break;
                 case "Rapide":
                     speed = 4;
-                    RemoveAllButton();
                     break;
             }
         }
-        public void RemoveAllButton() {
-            foreach (Controls.Button item in _components)
-            {
-                if (item.Text == "Pas a pas" || item.Text == "Tres lent" || item.Text == "Lent" || item.Text == "Normal" || item.Text == "Rapide") {
-                    _components.Remove(item);
-                }
-            }
-            
-        }
         private void EtapeSuivant_Click(object sender, EventArgs e)
         {
-
             if (etape == 2)
             {
 
                 if (afficherInsertion.currentState != 21)
                 {
-                    EtapeList[etape].opacity = EtapeList[etape].opacity / 2;
-                    EtapeList[etape - 1].opacity = EtapeList[etape - 1].opacity * 2;
                     Rectangles = afficherInsertion.AfficherNextPosAndState();
-                    etape--;
-                    afficherInsertion.currentState++;
+                    etape++;
                 }
             }
             else if (etape == 1)
@@ -189,6 +215,18 @@ namespace AlgoTri_TPI.States
                     Rectangles = afficherInsertion.AfficherNextPosAndState();
 
                     etape++;
+                }
+            }
+            else if (etape == 3)
+            {
+
+                if (afficherInsertion.currentState != 21)
+                {
+                    EtapeList[etape - 1].opacity = EtapeList[etape - 1].opacity / 2;
+                    EtapeList[etape - 2].opacity = EtapeList[etape - 2].opacity * 2;
+                    Rectangles = afficherInsertion.AfficherNextPosAndState();
+                    afficherInsertion.currentState++;
+                    etape = 1; compteur++;
                 }
             }
 
@@ -214,28 +252,43 @@ namespace AlgoTri_TPI.States
                 }
             }
             spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 750), Color.Black);
-            spriteBatch.DrawString(buttonFont, "0", new Vector2(215, 750), Color.Red);
+            spriteBatch.DrawString(buttonFont, compteur.ToString(), new Vector2(215, 750), Color.Red);
             spriteBatch.End();
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-            //destroy object when needed
         }
 
         public override void Update(GameTime gameTime)
         {
-
+            switch (speed)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
-            foreach (Component component in _components)
+            foreach (Component component in _components.ToArray())
             {
                 component.Update(gameTime);
             }
         }
         public void afficherRectangle()
         {
+            foreach (RectangleValue rectangle in Rectangles)
+            {
+                _components.Remove(rectangle);
+            }
             Rectangles = afficherInsertion.afficherList();
             foreach (RectangleValue rectangle in Rectangles)
             {

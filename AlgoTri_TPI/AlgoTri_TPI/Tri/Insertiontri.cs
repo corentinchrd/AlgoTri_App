@@ -37,7 +37,6 @@ namespace AlgoTri_TPI.Tri
         private void addValuesToPos()
         {
             List<int> ints = new List<int>(Values);
-
             _lp.Add(new Position(ints));
         }
 
@@ -49,12 +48,11 @@ namespace AlgoTri_TPI.Tri
 
         public override void NextStep()
         {
-            throw new NotImplementedException();
         }
 
         public override void Random()
         {
-            Values = Enumerable.Range(1, 20)     // la plage de nombres dans ta collection,
+            Values = Enumerable.Range(1, 20)     // la plage de nombres dans la collection,
                .OrderBy(x => Guid.NewGuid())   // ordonné par rapport à un guid,
                .ToList();
 
