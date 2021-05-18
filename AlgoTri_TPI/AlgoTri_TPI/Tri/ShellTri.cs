@@ -9,18 +9,24 @@ namespace AlgoTri_TPI.Tri
     public class ShellTri : Tri
     {
         private List<int> values;
-
         public List<int> Values { get => values; private set => values = value; }
+        public List<Position> _lp;
         public ShellTri()
         {
-            Random();
+            _lp = new List<Position>();
 
         }
         public override void BestCase()
         {
-            throw new NotImplementedException();
+            Values = Enumerable.Range(1, 20).ToList();
+            addValuesToPos();
         }
+        private void addValuesToPos()
+        {
+            List<int> ints = new List<int>(Values);
 
+            _lp.Add(new Position(ints));
+        }
         public override void NextStep()
         {
             throw new NotImplementedException();
@@ -31,39 +37,38 @@ namespace AlgoTri_TPI.Tri
             Values = Enumerable.Range(1, 20)     // la plage de nombres dans ta collection,
                      .OrderBy(x => Guid.NewGuid())   // ordonné par rapport à un guid,
                      .ToList();
+            addValuesToPos();
         }
 
         public override void Sort()
         {
-            int n = Values.Count;
-            int h = 1;
-
-            while (h < (n >> 1))
+            int[] intervalles = { 6, 4, 3, 2, 1 };
+            for (int ngap = 0; ngap < 5; ngap++)
             {
-                h = (h << 1) + 1;
-            }
-
-            while (h >= 1)
-            {
-                for (int i = h; i < n; i++)
+                for (int i = 0; i < intervalles[ngap]; i++)
                 {
-                    int k = i - h;
-                    for (int j = i; j >= h && Values[j].CompareTo(Values[k]) < 0; k -= h)
-                    {
-                        int temp = Values[j];
-                        Values[j] = Values[k];
-                        Values[k] = temp;
-                        j = k;
-                    }
+                    tri_insertion(Values, intervalles[ngap], i);
                 }
-                h >>= 1;
             }
         }
 
-
+        public void tri_insertion(List<int> t, int gap, int debut) {
+            int j, en_cours;
+            for (int i = gap+debut; i < 20; i++)
+            {
+                en_cours = t[i];
+                for (j = i; j >= gap && t[j-gap] > en_cours; j-=gap)
+                {
+                    t[j] = t[j - gap];
+                }
+                t[j] = en_cours;
+            }
+        }
         public override void WorstCase()
         {
-            throw new NotImplementedException();
+            Values = new List<int>();
+            Values.AddRange(new List<int>() { 19,6,20,8,16,15,17,5,18,7,10,12,14,2,4,3,9,11,13,1 });
+            addValuesToPos();
         }
 
     }

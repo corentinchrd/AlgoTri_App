@@ -71,16 +71,5 @@ namespace AlgoTri_TPI.Tri
             Values = Enumerable.Range(1, 20).Reverse().ToList();
             addValuesToPos();
         }
-        public bool isSort()
-        {
-            for (int i = 0; i < Values.Count(); i++)
-            {
-                if (Values[i] != i + 1)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }

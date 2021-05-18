@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="AlgoTri_TPI.AffichageTri" Collapsed="true">
-    <Position X="11" Y="1.5" Width="1.5" />
+  <Class Name="AlgoTri_TPI.AffichageTri">
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAEBAAAAAAAAAAAAAAAAAAAAIAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Affichage\AffichageTri.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Affichage.AfficherInsertion" Collapsed="true">
-    <Position X="6.75" Y="1.75" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Affichage.AfficherInsertion">
+    <Position X="1.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAEBAIAAAAABAIAAAIAAAAAAAQEAAAAgAAAAAEAA=</HashCode>
+      <HashCode>AAJAAEBAAAAAAAAAIAAAIAAAAAAIQEAAAAgAAAAAEAA=</HashCode>
       <FileName>Affichage\AfficherInsertion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.States.InsertionState" Collapsed="true">
     <Position X="4.75" Y="6.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQCBAABAAgEIgAIBAFAAAAAAAAAAAAAAAgCAAQAAAA=</HashCode>
+      <HashCode>BAQCBAABAAgEIgAIBADAAAAAABAAAQCIAAgCgBQQAAA=</HashCode>
       <FileName>States\InsertionState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.States.BulleState" Collapsed="true">
     <Position X="4.75" Y="5.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQCAAAAAAgAIgAgBEFAAAAAAAAAQAAAAAgEAAAAABA=</HashCode>
+      <HashCode>JAQCBAABAAgAIgAIBADAAAAAABAAAQCIAAgCgBRQAAA=</HashCode>
       <FileName>States\BulleState.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -38,14 +38,14 @@
   <Class Name="AlgoTri_TPI.States.PeigneState" Collapsed="true">
     <Position X="4.75" Y="7.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQCAAAAAAgAIgAgBEFAAAAAAAAAQAAAAAgEAAAAABA=</HashCode>
+      <HashCode>BAQGBAABAAgAIgAIBADAAAAAABAAAQCIAAgCghQSAAA=</HashCode>
       <FileName>States\PeigneState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.States.SelectionState" Collapsed="true">
     <Position X="4.75" Y="3.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQCAAAAAAgAIgAgBEFAAAAAAAAAQAAAAAgEAAAAABA=</HashCode>
+      <HashCode>BAQCBAABAAgAIgAIBADAEAAAABAAASCIAAgCgBQSAAA=</HashCode>
       <FileName>States\SelectionState.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,7 +66,7 @@
   <Class Name="AlgoTri_TPI.Tri.BulleTri" Collapsed="true">
     <Position X="13" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAQAAAAAIAABCAABAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAACAAAAAAAAAAAQAAAAAIAABCACBAAgAAAAAAI=</HashCode>
       <FileName>Tri\BulleTri.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,7 +80,7 @@
   <Class Name="AlgoTri_TPI.Tri.PeigneTri" Collapsed="true">
     <Position X="22" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAQAAAAAIAABCAABAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAACAAAAAAAAAABQAAAAQIAABCACBAAgAAAAAAI=</HashCode>
       <FileName>Tri\PeigneTri.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -103,6 +103,34 @@
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAQAAAAAIAABAAABAAAAAAAAAA=</HashCode>
       <FileName>Tri\Tri.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlgoTri_TPI.Controls.Button" Collapsed="true">
+    <Position X="12" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAwAAAAAAQAAAgAgAAAAAAAAAAqgACAEAAAACAgAAgA=</HashCode>
+      <FileName>Controls\Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlgoTri_TPI.Affichage.AfficherPeigne" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEBAAAAAAAQAIAAAIAEAAAAIQECAAAgBAAAAEAA=</HashCode>
+      <FileName>Affichage\AffichagePeigne.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlgoTri_TPI.Affichage.AfficherBulle" Collapsed="true">
+    <Position X="5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAERAAAAAAAQAIAAAIAAAAAAIQECAAAgAAAAAEAA=</HashCode>
+      <FileName>Affichage\AfficherBulle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AlgoTri_TPI.Affichage.AfficherSelection" Collapsed="true">
+    <Position X="3" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAGBAQAAAAAQAIAAAIAAAAAAIQECAAAgAAAAAFAA=</HashCode>
+      <FileName>Affichage\AfficherSelection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -31,6 +31,7 @@ namespace AlgoTri_TPI.Tri
                     x = Values[i];
                     Values[i] = Values[min];
                     Values[min] = x;
+                    addValuesToPos();
                 }
             }
         }

@@ -26,7 +26,7 @@ namespace AlgoTri_TPI
         public Vector2 StartPos { get => _startPos; set => _startPos = value; }
         public int PositionIndex { get => _positionIndex; set => _positionIndex = value; }
         public bool IsSelected { get => isSelected; set => isSelected = value; }
-
+        private int decalage = 0;
         public RectangleValue(Texture2D texture, Vector2 pos, SpriteFont font, int value, Color color, int sp)
         {
             Texture = texture;
@@ -61,6 +61,16 @@ namespace AlgoTri_TPI
         {
             _position.Y += 50;
         }
+        public void moveDownMultiple(int i)
+        {
+            decalage = i * 25;
+            _position.Y += 25 * i;
+        }
+        public void moveUpMultiple(int i)
+        {
+            decalage = i * 25;
+            _position.Y -= 25 * i;
+        }
         public void moveUp()
         {
             _position.Y -= 50;
@@ -68,6 +78,10 @@ namespace AlgoTri_TPI
         public void moveLeft()
         {
             _position.X -= 1;
+        }
+        public void moveOriginalPos()
+        {
+            _position.Y = _startPos.Y;
         }
         public bool MoveTo(Vector2 PositionToGo)
         {
