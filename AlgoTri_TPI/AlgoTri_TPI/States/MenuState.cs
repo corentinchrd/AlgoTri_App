@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Net;
 
 namespace AlgoTri_TPI.States
 {
@@ -98,7 +99,7 @@ namespace AlgoTri_TPI.States
         }
         private void AboutButton_Click(object sender, EventArgs e)
         {
-            //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            System.Diagnostics.Process.Start(@"C:\Users\Corentin\Desktop\TPI_Doc.pdf");
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
