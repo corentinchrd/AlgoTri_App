@@ -62,18 +62,8 @@ namespace AlgoTri_TPI.Affichage
             rectangleValues[0].IsSelected = true;
             return rectangleValues;
         }
-        public override List<int> GetValues()
-        {
-            //List<int> tmpList = new List<int>();
-            //foreach (RectangleValue item in rectangleValues)
-            //{
-            //    tmpList.Add(item.Value);
-            //}
-            //values = tmpList;
-            return new List<int>();
-        }
 
-        public Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
+        public override Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
         {
             var differences = new Dictionary<int, int>();
 
@@ -87,7 +77,7 @@ namespace AlgoTri_TPI.Affichage
             return differences;
 
         }
-        public List<RectangleValue> AfficherNextPos()
+        public override List<RectangleValue> AfficherNextPos()
         {
             if (currentState != 20)
             {
@@ -113,7 +103,7 @@ namespace AlgoTri_TPI.Affichage
             }
             return rectangleValues;
         }
-        public List<RectangleValue> AfficherNextPosAndState()
+        public override List<RectangleValue> AfficherNextPosAndState()
         {
             List<int> old = positions[currentState - 1].position;
             List<int> newPos = positions[currentState].position;

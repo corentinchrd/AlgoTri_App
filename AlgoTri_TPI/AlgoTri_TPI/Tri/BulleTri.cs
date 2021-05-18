@@ -13,12 +13,10 @@ namespace AlgoTri_TPI.Tri
     {
         private List<int> values;
         public List<int> Values { get => values; private set => values = value; }
-
-        private List<Position> _lp;
-        public List<Position> Lp { get => _lp; set => _lp = value; }
+        public List<Position> _lp;
         public BulleTri()
         {
-            Lp = new List<Position>();
+            _lp = new List<Position>();
         }
         public override void BestCase()
         {
@@ -34,7 +32,7 @@ namespace AlgoTri_TPI.Tri
         {
             List<int> ints = new List<int>(Values);
 
-            Lp.Add(new Position(ints));
+            _lp.Add(new Position(ints));
         }
         public override void Random()
         {
@@ -61,9 +59,8 @@ namespace AlgoTri_TPI.Tri
                         int temp = Values[en_cours];
                         Values[en_cours] = Values[en_cours + 1];
                         Values[en_cours +1] = temp;
-
-                        
                     }
+
                     addValuesToPos();
                 }
             }

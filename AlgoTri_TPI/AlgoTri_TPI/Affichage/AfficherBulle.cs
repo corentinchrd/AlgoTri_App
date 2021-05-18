@@ -19,7 +19,9 @@ namespace AlgoTri_TPI.Affichage
         List<Position> positions;
         BulleState bulleState;
 
-        public int currentState = 0;
+        public int currentState = 1;
+        public int compteur = 0;
+        private int Iteration = 0;
         public AfficherBulle(Texture2D rS, SpriteFont f, List<Position> p, BulleState ist)
         {
             rectangleValues = new List<RectangleValue>();
@@ -62,18 +64,8 @@ namespace AlgoTri_TPI.Affichage
             rectangleValues[0].IsSelected = true;
             return rectangleValues;
         }
-        public override List<int> GetValues()
-        {
-            //List<int> tmpList = new List<int>();
-            //foreach (RectangleValue item in rectangleValues)
-            //{
-            //    tmpList.Add(item.Value);
-            //}
-            //values = tmpList;
-            return new List<int>();
-        }
 
-        public Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
+        public override Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
         {
             var differences = new Dictionary<int, int>();
 
@@ -85,9 +77,9 @@ namespace AlgoTri_TPI.Affichage
                 }
             }
             return differences;
-
         }
-        public List<RectangleValue> AfficherNextPos()
+
+        public override List<RectangleValue> AfficherNextPos()
         {
             if (currentState != bulleState.AllPosition.Count() - 1)
             {
@@ -114,31 +106,44 @@ namespace AlgoTri_TPI.Affichage
             }
             return rectangleValues;
         }
-        public List<RectangleValue> AfficherPrevPos()
+
+        public override List<RectangleValue> AfficherNextPosAndState()
         {
-            if (currentState != 0)
-            {
-                currentState--;
-            }
-            List<int> old = positions[currentState + 1].position;
+            List<int> old = positions[currentState - 1].position;
             List<int> newPos = positions[currentState].position;
 
             Dictionary<int, int> kvp = compareTwoList(old, newPos);
 
-            foreach (var item in kvp)
+            if (bulleState.etape == 5)
             {
-                rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(bulleState.tableauPosition[item.Key]);
+                rectangleValues.Find(x => x.PositionIndex == compteur).moveDown();
+                rectangleValues.Find(x => x.PositionIndex == compteur + 1).moveDown();
 
             }
-            for (int i = 0; i < rectangleValues.Count(); i++)
+            else if (bulleState.etape == 6)
             {
-                if (i == currentState)
-                    rectangleValues[i].IsSelected = true;
-                else
-                    rectangleValues[i].IsSelected = false;
+                foreach (var item in kvp)
+                {
+                    rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
+                    rectangleValues.Find(x => x.Value == item.Value).UpdatePos(bulleState.tableauPosition[item.Key]);
+                }
             }
+            else if (bulleState.etape == 9)
+            {
 
+                rectangleValues.Find(x => x.PositionIndex == compteur).moveUp();
+                rectangleValues.Find(x => x.PositionIndex == compteur + 1).moveUp();
+
+            }
+            else if (bulleState.etape == 10)
+            {
+                if (compteur + 1 != 19 - Iteration)
+                    compteur++;
+                else { 
+                    compteur = 0;
+                    Iteration++;
+                }
+            }
             return rectangleValues;
         }
     }
