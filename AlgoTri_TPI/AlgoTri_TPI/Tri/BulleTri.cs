@@ -17,23 +17,25 @@ namespace AlgoTri_TPI.Tri
         public BulleTri()
         {
             _lp = new List<Position>();
-        }
+        }/// <summary>
+         /// donne le meilleur des cas
+         /// </summary>
         public override void BestCase()
         {
             Values = Enumerable.Range(1, 20).ToList();
             addValuesToPos();
         }
-
-        public override void NextStep()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Ajoute les valeurs a la liste des positions
+        /// </summary>
         private void addValuesToPos()
         {
             List<int> ints = new List<int>(Values);
 
             _lp.Add(new Position(ints));
-        }
+        }/// <summary>
+         /// Donne des valeurs aléatoire et les ajoute a la position
+         /// </summary>
         public override void Random()
         {
             Values = Enumerable.Range(1, 20)     // la plage de nombres dans ta collection,
@@ -42,9 +44,12 @@ namespace AlgoTri_TPI.Tri
 
             addValuesToPos();
         }
-
+        /// <summary>
+        /// Tri les valeurs de la liste et les ajoutes dans la liste des positions
+        /// </summary>
         public override void Sort()
         {
+            //ce tri parcours le tableau regarde si l'index est plus grand que l'index + 1 inverse si il est necéssaire et faire ca jusqu'a ce que le talbeau est trier
             int passage = 0;
             bool permutation = true;
             int en_cours;
@@ -65,7 +70,9 @@ namespace AlgoTri_TPI.Tri
                 }
             }
         }
-
+        /// <summary>
+        /// Donne le pire des cas
+        /// </summary>
         public override void WorstCase()
         {
             Values = Enumerable.Range(1, 20).Reverse().ToList();

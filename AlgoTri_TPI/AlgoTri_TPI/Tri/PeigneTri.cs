@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script est le tri a Peigne
+ Date : 19.05.2021
+ */
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -10,6 +16,7 @@ namespace AlgoTri_TPI.Tri
     {
         private List<int> values;
         private int intervalle = 20;
+        const int VALEUR_MAX = 20;
         public List<int> Values { get => values; private set => values = value; }
         public int Intervalle { get => intervalle; private set => intervalle = value; }
 
@@ -20,33 +27,39 @@ namespace AlgoTri_TPI.Tri
             _lp = new List<Position>();
 
         }
+        /// <summary>
+        /// donne le meilleur des cas
+        /// </summary>
         public override void BestCase()
         {
-            Values = Enumerable.Range(1, 20).ToList();
+            Values = Enumerable.Range(1, VALEUR_MAX).ToList();
             addValuesToPos();
         }
-
-        public override void NextStep()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Ajoute les valeurs a la liste des positions
+        /// </summary>
         private void addValuesToPos()
         {
             List<int> ints = new List<int>(Values);
 
             _lp.Add(new Position(ints));
         }
-
+        /// <summary>
+        /// donne le meilleur des cas
+        /// </summary>
         public override void Random()
         {
-            Values = Enumerable.Range(1, 20)     // la plage de nombres dans ta collection,
+            Values = Enumerable.Range(1, VALEUR_MAX)     // la plage de nombres dans ta collection,
                   .OrderBy(x => Guid.NewGuid())   // ordonné par rapport à un guid,
                   .ToList(); 
             addValuesToPos();
         }
-
+        /// <summary>
+        /// Tri les valeurs de la liste et les ajoutes dans la liste des positions
+        /// </summary>
         public override void Sort()
         {
+            // Ce tri prendre une valeur d'intervalle ensuite séléctionne une valeur a un index et a un index + l'intervalle regarde si ils sont plus petit ou plus grand et inverse
             Intervalle = 20;
             bool permutation = true;
             int en_cours;
@@ -70,7 +83,9 @@ namespace AlgoTri_TPI.Tri
                 }
             }
         }
-
+        /// <summary>
+        /// Donne le pire des cas
+        /// </summary>
         public override void WorstCase()
         {
             Values = new List<int>();

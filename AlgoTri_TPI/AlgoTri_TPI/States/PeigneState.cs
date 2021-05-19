@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script est la vue du Tri par peigne
+ Date : 19.05.2021
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +18,7 @@ namespace AlgoTri_TPI.States
 {
     public class PeigneState : State
     {
+        #region Champ
         private List<Component> _components;
         Texture2D rectangleSprite;
         SpriteFont buttonFont;
@@ -19,15 +26,18 @@ namespace AlgoTri_TPI.States
         private Tri.PeigneTri peigneTri;
         private AfficherPeigne afficherPeigne;
         private List<Position> _allPosition;
+        Texture2D buttonTexture;
+        int speed = 0;
+        int old = 0;
+        #endregion
+        #region Propriete
         public List<EtapeImage> EtapeList;
         public int etape = 1;
         public int compteur = 0;
         public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
         public List<RectangleValue> Rectangles { get => _rectangles; set => _rectangles = value; }
         public List<int> tableauPosition;
-        Texture2D buttonTexture;
-        int speed = 0;
-        int old = 0;
+        #endregion
         public PeigneState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             buttonTexture = _content.Load<Texture2D>("Controls/Button");
@@ -39,6 +49,7 @@ namespace AlgoTri_TPI.States
             AllPosition = peigneTri._lp;
             tableauPosition = new List<int>();
             etape = 1;
+            //ajoute les coordonées polaire pour les rectangles dans une liste
             for (int i = 0; i < 20; i++)
             {
                 tableauPosition.Add(152 + i * 45);
@@ -161,7 +172,7 @@ namespace AlgoTri_TPI.States
             _components.Add(etapeImage2);
             _components.Add(etapeImage3);
             _components.Add(etapeImage4);
-            _components.Add(etapeImage5); 
+            _components.Add(etapeImage5);
             _components.Add(etapeImage6);
             _components.Add(etapeImage7);
             _components.Add(etapeImage8);
@@ -171,7 +182,11 @@ namespace AlgoTri_TPI.States
             _components.Add(etapeImage12);
             #endregion
         }
-
+        /// <summary>
+        /// Permet de donner le pire des cas aux valeurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WorstCase_Click(object sender, EventArgs e)
         {
             EtapeList[etape].opacity /= 2; EtapeList[1].opacity *= 2;
@@ -182,7 +197,11 @@ namespace AlgoTri_TPI.States
             etape = 1;
             afficherPeigne = new AfficherPeigne(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
         }
-
+        /// <summary>
+        /// Permet de donner le meilleurs des cas aux valeurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BestCase_Click(object sender, EventArgs e)
         {
             EtapeList[etape].opacity /= 2; EtapeList[1].opacity *= 2;
@@ -193,7 +212,11 @@ namespace AlgoTri_TPI.States
             etape = 1;
             afficherPeigne = new AfficherPeigne(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
         }
-
+        /// <summary>
+        /// permet de donner des valeurs aléatoire a la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Random_Click(object sender, EventArgs e)
         {
             EtapeList[etape].opacity /= 2; EtapeList[1].opacity *= 2;
@@ -204,7 +227,11 @@ namespace AlgoTri_TPI.States
             etape = 1;
             afficherPeigne = new AfficherPeigne(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
         }
-
+        /// <summary>
+        /// Permet de choisir la vitesse d'éxécution du tri
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PasAPasButton_Click(object sender, EventArgs e)
         {
             Controls.Button b = sender as Controls.Button;
@@ -228,6 +255,11 @@ namespace AlgoTri_TPI.States
                     break;
             }
         }
+        /// <summary>
+        /// permet d'afficher l'étape en cours dans la liste des étapes et de faire bouger les rectangles
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EtapeSuivant_Click(object sender, EventArgs e)
         {
             if (afficherPeigne.Iteration1 != afficherPeigne.gapPeigne.Count)
@@ -278,7 +310,11 @@ namespace AlgoTri_TPI.States
                 }
             }
         }
-
+        /// <summary>
+        /// Fontion appelée aprs l'update pour dessiner les composants
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
@@ -302,12 +338,18 @@ namespace AlgoTri_TPI.States
             spriteBatch.DrawString(buttonFont, compteur.ToString(), new Vector2(215, 750), Color.Red);
             spriteBatch.End();
         }
-
+        /// <summary>
+        /// Fonction appelée apres l'update pour suprimer des éléments
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void PostUpdate(GameTime gameTime)
         {
 
         }
-
+        /// <summary>
+        /// fonctin appelée le plus souvant possible
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             switch (speed)
@@ -331,6 +373,9 @@ namespace AlgoTri_TPI.States
                 component.Update(gameTime);
             }
         }
+        /// <summary>
+        /// Permet d'afficher tous les rectangles
+        /// </summary>
         public void afficherRectangle()
         {
             foreach (RectangleValue rectangle in Rectangles)

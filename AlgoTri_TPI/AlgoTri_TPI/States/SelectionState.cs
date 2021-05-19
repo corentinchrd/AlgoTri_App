@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script est la vue du Tri par séléction
+ Date : 19.05.2021
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,93 +17,99 @@ namespace AlgoTri_TPI.States
 {
     public class SelectionState : State
     {
+        #region Champ
         private List<Component> _components;
-        Texture2D rectangleSprite;
-        SpriteFont buttonFont;
+        private Texture2D _rectangleSprite;
+        private SpriteFont _buttonFont;
         private List<RectangleValue> _rectangles;
-        private Tri.SelectionTri selectionTri;
-        private AfficherSelection afficherSelection;
-        private List<Position> _allPosition;
+        private Tri.SelectionTri _selectionTri;
+        private AfficherSelection _afficherSelection;
+        private List<Position> _allPosition; 
+        private Texture2D _buttonTexture;
+        private int _speed = 0;
+        private int _old = 0;
+        #endregion
+        #region Propriete
         public List<EtapeImage> EtapeList;
         public int etape = 1;
         public int compteur = 0;
         public List<Position> AllPosition { get => _allPosition; set => _allPosition = value; }
         public List<RectangleValue> Rectangles { get => _rectangles; set => _rectangles = value; }
         public List<int> tableauPosition;
-        Texture2D buttonTexture;
-        int speed = 0;
-        int old = 0;
+        #endregion
+        
         public SelectionState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-            buttonTexture = _content.Load<Texture2D>("Controls/Button");
-            rectangleSprite = _content.Load<Texture2D>("Controls/1px");
-            buttonFont = _content.Load<SpriteFont>("Fonts/File");
+            _buttonTexture = _content.Load<Texture2D>("Controls/Button");
+            _rectangleSprite = _content.Load<Texture2D>("Controls/1px");
+            _buttonFont = _content.Load<SpriteFont>("Fonts/File");
             EtapeList = new List<EtapeImage>();
-            selectionTri = new Tri.SelectionTri();
+            _selectionTri = new Tri.SelectionTri();
             AllPosition = new List<Position>();
-            AllPosition = selectionTri._lp;
+            AllPosition = _selectionTri._lp;
             tableauPosition = new List<int>();
             etape = 1;
+            // ajout des positions fixe du tableau 
             for (int i = 0; i < 20; i++)
             {
                 tableauPosition.Add(152 + i * 45);
             }
 
-            afficherSelection = new AfficherSelection(rectangleSprite, buttonFont, AllPosition, this);
+            _afficherSelection = new AfficherSelection(_rectangleSprite, _buttonFont, AllPosition, this);
             _components = new List<Component>();
             Rectangles = new List<RectangleValue>();
 
             #region Button
-            Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button etapeSuivante = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(1100, 750),
                 Text = "Etape suivante",
             };
-            Controls.Button PasAPas = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button PasAPas = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(200, 100),
                 Text = "Pas a Pas",
             };
 
-            PasAPas.Click += PasAPasButton_Click;
+            PasAPas.Click += Speed_Click;
             _components.Add(PasAPas);
 
-            Controls.Button TresLent = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button TresLent = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(400, 100),
                 Text = "Tres lent",
             };
 
-            TresLent.Click += PasAPasButton_Click;
+            TresLent.Click += Speed_Click;
             _components.Add(TresLent);
 
-            Controls.Button Lent = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button Lent = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(600, 100),
                 Text = "Lent",
             };
 
-            Lent.Click += PasAPasButton_Click;
+            Lent.Click += Speed_Click;
             _components.Add(Lent);
 
-            Controls.Button Normal = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button Normal = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(800, 100),
                 Text = "Normal",
             };
 
-            Normal.Click += PasAPasButton_Click;
+            Normal.Click += Speed_Click;
             _components.Add(Normal);
-            Controls.Button Rapide = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button Rapide = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(1000, 100),
                 Text = "Rapide",
             };
 
-            Rapide.Click += PasAPasButton_Click;
+            Rapide.Click += Speed_Click;
             _components.Add(Rapide);
 
-            Controls.Button Random = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button Random = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(500, 750),
                 Text = "Random",
@@ -106,7 +118,7 @@ namespace AlgoTri_TPI.States
             Random.Click += Random_Click;
             _components.Add(Random);
 
-            Controls.Button BestCase = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button BestCase = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(700, 750),
                 Text = "Meilleur cas",
@@ -115,7 +127,7 @@ namespace AlgoTri_TPI.States
             BestCase.Click += BestCase_Click;
             _components.Add(BestCase);
 
-            Controls.Button WorstCase = new Controls.Button(buttonTexture, buttonFont)
+            Controls.Button WorstCase = new Controls.Button(_buttonTexture, _buttonFont)
             {
                 Position = new Vector2(900, 750),
                 Text = "Pire cas",
@@ -149,101 +161,126 @@ namespace AlgoTri_TPI.States
             _components.Add(etapeImage5);
             #endregion
         }
-
+        /// <summary>
+        /// Permet de donner le pire des cas aux valeurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WorstCase_Click(object sender, EventArgs e)
         {
             EtapeList[etape].opacity /= 2; EtapeList[1].opacity *= 2;
-            selectionTri = new Tri.SelectionTri();
-            selectionTri.WorstCase();
-            selectionTri.Sort();
-            AllPosition = selectionTri._lp;
+            _selectionTri = new Tri.SelectionTri();
+            _selectionTri.WorstCase();
+            _selectionTri.Sort();
+            AllPosition = _selectionTri._lp;
             etape = 1;
-            afficherSelection = new AfficherSelection(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
+            _afficherSelection = new AfficherSelection(_rectangleSprite, _buttonFont, AllPosition, this); afficherRectangle();
         }
-
+        /// <summary>
+        /// Permet de donner le meilleurs des cas aux valeurs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BestCase_Click(object sender, EventArgs e)
         {
             EtapeList[etape].opacity /= 2; EtapeList[1].opacity *= 2;
-            selectionTri = new Tri.SelectionTri();
-            selectionTri.BestCase();
-            selectionTri.Sort();
-            AllPosition = selectionTri._lp;
+            _selectionTri = new Tri.SelectionTri();
+            _selectionTri.BestCase();
+            _selectionTri.Sort();
+            AllPosition = _selectionTri._lp;
             etape = 1;
-            afficherSelection = new AfficherSelection(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
+            _afficherSelection = new AfficherSelection(_rectangleSprite, _buttonFont, AllPosition, this); afficherRectangle();
         }
-
+        /// <summary>
+        /// permet de donner des valeurs aléatoire a la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Random_Click(object sender, EventArgs e)
         {
             EtapeList[etape].opacity /= 2; EtapeList[1].opacity *= 2;
-            selectionTri = new Tri.SelectionTri();
-            selectionTri.Random();
-            selectionTri.Sort();
-            AllPosition = selectionTri._lp;
+            _selectionTri = new Tri.SelectionTri();
+            _selectionTri.Random();
+            _selectionTri.Sort();
+            AllPosition = _selectionTri._lp;
             etape = 1;
-            afficherSelection = new AfficherSelection(rectangleSprite, buttonFont, AllPosition, this); afficherRectangle();
+            _afficherSelection = new AfficherSelection(_rectangleSprite, _buttonFont, AllPosition, this); afficherRectangle();
         }
-
-        private void PasAPasButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Fonction permetant la vitesse d'exécution du tri
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Speed_Click(object sender, EventArgs e)
         {
             Controls.Button b = sender as Controls.Button;
 
             switch (b.Text)
             {
                 case "Pas a Pas":
-                    speed = 0;
+                    _speed = 0;
                     break;
                 case "Tres lent":
-                    speed = 1;
+                    _speed = 1;
                     break;
                 case "Lent":
-                    speed = 2;
+                    _speed = 2;
                     break;
                 case "Normal":
-                    speed = 3;
+                    _speed = 3;
                     break;
                 case "Rapide":
-                    speed = 4;
+                    _speed = 4;
                     break;
             }
         }
+        /// <summary>
+        /// permet d'afficher l'étape en cours dans la liste des étapes et de faire bouger les rectangles
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EtapeSuivant_Click(object sender, EventArgs e)
         {
-            if (afficherSelection.currentState != _allPosition.Count)
+            if (_afficherSelection.currentState != _allPosition.Count)
             {
                 switch (etape)
                 {
                     case 0:
-                        EtapeList[old].opacity /= 2;
+                        EtapeList[_old].opacity /= 2;
                         EtapeList[etape].opacity *= 2;
-                        old = 0;
+                        _old = 0;
                         etape++;
                         break;
                     case 1:
-                        EtapeList[old].opacity /= 2;
+                        EtapeList[_old].opacity /= 2;
                         EtapeList[etape].opacity *= 2;
-                        Rectangles = afficherSelection.AfficherNextPosAndState();
+                        Rectangles = _afficherSelection.AfficherNextPosAndState();
                         etape++;
-                        old = 1;
+                        _old = 1;
                         break;
                     case 2:
-                        EtapeList[old].opacity /= 2;
+                        EtapeList[_old].opacity /= 2;
                         EtapeList[etape].opacity *= 2;
-                        Rectangles = afficherSelection.AfficherNextPosAndState();
-                        old = 2;
+                        Rectangles = _afficherSelection.AfficherNextPosAndState();
+                        _old = 2;
                         etape++;
                         break;
                     case 3:
-                        EtapeList[old].opacity /= 2;
+                        EtapeList[_old].opacity /= 2;
                         EtapeList[etape].opacity *= 2;
-                        Rectangles = afficherSelection.AfficherNextPosAndState();
-                        afficherSelection.currentState++;
-                        old = 3;
+                        Rectangles = _afficherSelection.AfficherNextPosAndState();
+                        _afficherSelection.currentState++;
+                        _old = 3;
                         etape = 1;
                         break;
                 }
             }
         }
-
+        /// <summary>
+        /// Fontion appelée aprs l'update pour dessiner les composants
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
@@ -263,19 +300,25 @@ namespace AlgoTri_TPI.States
                     component.Draw(gameTime, spriteBatch);
                 }
             }
-            spriteBatch.DrawString(buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 750), Color.Black);
-            spriteBatch.DrawString(buttonFont, compteur.ToString(), new Vector2(215, 750), Color.Red);
+            spriteBatch.DrawString(_buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 750), Color.Black);
+            spriteBatch.DrawString(_buttonFont, compteur.ToString(), new Vector2(215, 750), Color.Red);
             spriteBatch.End();
         }
-
+        /// <summary>
+        /// Fonction appelée apres l'update pour suprimer des éléments
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void PostUpdate(GameTime gameTime)
         {
 
         }
-
+        /// <summary>
+        /// fonctin appelée le plus souvant possible
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            switch (speed)
+            switch (_speed)
             {
                 case 0:
                     break;
@@ -296,13 +339,16 @@ namespace AlgoTri_TPI.States
                 component.Update(gameTime);
             }
         }
+        /// <summary>
+        /// Permet d'afficher tous les rectangles
+        /// </summary>
         public void afficherRectangle()
         {
             foreach (RectangleValue rectangle in Rectangles)
             {
                 _components.Remove(rectangle);
             }
-            Rectangles = afficherSelection.afficherList();
+            Rectangles = _afficherSelection.afficherList();
             foreach (RectangleValue rectangle in Rectangles)
             {
                 _components.Add(rectangle);

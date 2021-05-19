@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script contient permet d'envoyer a la vue les éléments à afficher pour le tri Shell
+ Date : 19.05.2021
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -21,7 +27,7 @@ namespace AlgoTri_TPI.Affichage
         public int currentState = 1;
         public int compteur = 0;
         private int Iteration = 0;
-        private int[] gap = { 6, 4, 3, 2, 1 };
+        private int[] gap = { 6, 4, 3, 2, 1 }; // Tableau de tout les espacements
         int intervalle;
 
         public int Iteration1 { get => Iteration; private set => Iteration = value; }
@@ -33,6 +39,7 @@ namespace AlgoTri_TPI.Affichage
             font = f;
             positions = p;
             shellState = ist;
+            //Liste de couleurs
             #region Colors
             _colors = new List<Color>();
 
@@ -57,7 +64,10 @@ namespace AlgoTri_TPI.Affichage
             _colors.Add(Color.IndianRed);
             _colors.Add(Color.Linen);
             #endregion
-        }
+        }/// <summary>
+         /// Retourne la liste de rectangle à afficher
+         /// </summary>
+         /// <returns></returns>
         public override List<RectangleValue> afficherList()
         {
             for (int i = 0; i < 20; i++)
@@ -68,7 +78,12 @@ namespace AlgoTri_TPI.Affichage
             rectangleValues[0].IsSelected = true;
             return rectangleValues;
         }
-
+        /// <summary>
+        /// Permet de comparer la list a et la list b et de renvoyer un dictionnaire avec les différence a l'index
+        /// </summary>
+        /// <param name="a">Liste 1</param>
+        /// <param name="b">Liste 2</param>
+        /// <returns></returns>
         public override Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
         {
             var differences = new Dictionary<int, int>();
@@ -82,38 +97,14 @@ namespace AlgoTri_TPI.Affichage
             }
             return differences;
         }
-
-        public override List<RectangleValue> AfficherNextPos()
-        {
-            if (currentState != shellState.AllPosition.Count() - 1)
-            {
-                currentState++;
-            }
-            List<RectangleValue> tmpList = rectangleValues;
-            List<int> old = positions[currentState - 1].position;
-            List<int> newPos = positions[currentState].position;
-
-            Dictionary<int, int> kvp = compareTwoList(old, newPos);
-
-            foreach (var item in kvp)
-            {
-                rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(shellState.tableauPosition[item.Key]);
-
-            }
-            for (int i = 0; i < rectangleValues.Count(); i++)
-            {
-                if (i == currentState)
-                    rectangleValues[i].IsSelected = true;
-                else
-                    rectangleValues[i].IsSelected = false;
-            }
-            return rectangleValues;
-        }
-
+        /// <summary>
+        /// Retourne une List de RectangleValue avec des étapes intermediaire
+        /// </summary>
+        /// <returns>List<RectangleValues></returns>
         public override List<RectangleValue> AfficherNextPosAndState()
         {
             intervalle = 6;
+            //Afficer les différente liste en faisant descendre les éléments
             if (shellState.etape == 6)
             {
                 switch (intervalle)
@@ -197,6 +188,7 @@ namespace AlgoTri_TPI.Affichage
                 }
 
             }
+            //Remettre tous les éléments à leur place originale
             else if (shellState.etape == 7) {
                 foreach (RectangleValue item in rectangleValues)
                 {

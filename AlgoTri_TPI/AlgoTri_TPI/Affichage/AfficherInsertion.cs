@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script contient permet d'envoyer a la vue les éléments à afficher pour le tri par Insertion
+ Date : 19.05.2021
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,7 +25,7 @@ namespace AlgoTri_TPI.Affichage
         List<Position> positions;
         InsertionState insertionState;
 
-        public int currentState = 1;
+        public int currentState = 1; // étape en cours dans le tri
         public AfficherInsertion(Texture2D rS, SpriteFont f, List<Position> p, InsertionState ist)
         {
             rectangleValues = new List<RectangleValue>();
@@ -27,6 +33,7 @@ namespace AlgoTri_TPI.Affichage
             font = f;
             positions = p;
             insertionState = ist;
+            //Liste de toutes les couleurs
             #region Colors
             _colors = new List<Color>();
 
@@ -52,6 +59,10 @@ namespace AlgoTri_TPI.Affichage
             _colors.Add(Color.Linen);
             #endregion
         }
+         /// <summary>
+         /// Retourne la liste de rectangle à afficher
+         /// </summary>
+         /// <returns></returns>
         public override List<RectangleValue> afficherList()
         {
             for (int i = 0; i < 20; i++)
@@ -62,7 +73,12 @@ namespace AlgoTri_TPI.Affichage
             rectangleValues[0].IsSelected = true;
             return rectangleValues;
         }
-
+        /// <summary>
+        /// Permet de comparer la list a et la list b et de renvoyer un dictionnaire avec les différence a l'index
+        /// </summary>
+        /// <param name="a">Liste 1</param>
+        /// <param name="b">Liste 2</param>
+        /// <returns></returns>
         public override Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
         {
             var differences = new Dictionary<int, int>();
@@ -77,43 +93,23 @@ namespace AlgoTri_TPI.Affichage
             return differences;
 
         }
-        public override List<RectangleValue> AfficherNextPos()
-        {
-            if (currentState != 20)
-            {
-                currentState++;
-            }
-            List<int> old = positions[currentState - 1].position;
-            List<int> newPos = positions[currentState].position;
-
-            Dictionary<int, int> kvp = compareTwoList(old, newPos);
-
-            foreach (var item in kvp)
-            {
-                rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(insertionState.tableauPosition[item.Key]);
-
-            }
-            for (int i = 0; i < rectangleValues.Count(); i++)
-            {
-                if (i == currentState)
-                    rectangleValues[i].IsSelected = true;
-                else
-                    rectangleValues[i].IsSelected = false;
-            }
-            return rectangleValues;
-        }
+        /// <summary>
+        /// Retourne une List de RectangleValue avec des étapes intermediaire
+        /// </summary>
+        /// <returns>List<RectangleValues></returns>
         public override List<RectangleValue> AfficherNextPosAndState()
         {
             List<int> old = positions[currentState - 1].position;
             List<int> newPos = positions[currentState].position;
 
             Dictionary<int, int> kvp = compareTwoList(old, newPos);
-
+            // faire descendre la valeur en cours qui va etre traitée
             if (insertionState.etape == 1)
             {
                 rectangleValues[currentState - 1].moveDown();
             }
+
+            //faire déplacer toutes les différences dans le tableau à leur position
             else if (insertionState.etape == 2)
             {
                 foreach (var item in kvp)
@@ -130,6 +126,7 @@ namespace AlgoTri_TPI.Affichage
                     }
                 }
             }
+            // remettre la valeur la postion Y de base
             else {
                 rectangleValues[currentState - 1].moveUp();
             }

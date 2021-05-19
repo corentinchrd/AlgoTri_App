@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script est le tri par Séléction
+ Date : 19.05.2021
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using AlgoTri_TPI.States;
@@ -38,9 +44,11 @@ namespace AlgoTri_TPI
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _currentState = new MenuState(this, GraphicsDevice, Content);
-            // TODO: use this.Content to load your game content here
         }
-
+        /// <summary>
+        /// Fonction appelée le plus souvant possible
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Update(GameTime gameTime)
         {
 
@@ -56,7 +64,10 @@ namespace AlgoTri_TPI
 
             base.Update(gameTime);
         }
-
+        /// <summary>
+        /// Fonction appelée apres le update pour dessiner le state
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script est la classe des positions
+ Date : 19.05.2021
+ */
+using System;
 using System.Collections.Generic;
 using System.Text;
 

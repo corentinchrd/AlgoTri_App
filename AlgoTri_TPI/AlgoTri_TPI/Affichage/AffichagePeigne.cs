@@ -1,11 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ Auteur : Corentin Chuard
+ Version : 1.0.0
+ Description : Ce script contient permet d'envoyer a la vue les éléments à afficher pour le tri a peigne
+ Date : 19.05.2021
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
+using System.Linq; // Permet de trouver la valeur d'un élément dans un tableau
 using AlgoTri_TPI.States;
 
 namespace AlgoTri_TPI.Affichage
@@ -18,10 +24,10 @@ namespace AlgoTri_TPI.Affichage
         List<Color> _colors;
         List<Position> positions;
         PeigneState peigneState;
-        public List<int> gapPeigne = new List<int>() { 15, 11, 8, 6, 4, 3, 2, 1 };
-        public int currentState = 1;
-        public int compteur = 0;
-        private int Iteration = 0;
+        public List<int> gapPeigne = new List<int>() { 15, 11, 8, 6, 4, 3, 2, 1 }; //Liste des ecartements a prendre entre 2 valeurs
+        public int currentState = 1; //Etape dans le tri
+        public int compteur = 0; //Nombre d'étape dans le tri au total
+        private int Iteration = 0; //Nombre d'iteration pour definir le gap
 
         public int Iteration1 { get => Iteration; private set => Iteration = value; }
 
@@ -32,6 +38,7 @@ namespace AlgoTri_TPI.Affichage
             font = f;
             positions = p;
             peigneState = ist;
+            //Liste des couleurs pour avoir des couleurs distincte
             #region Colors
             _colors = new List<Color>();
 
@@ -57,17 +64,26 @@ namespace AlgoTri_TPI.Affichage
             _colors.Add(Color.Linen);
             #endregion
         }
+        /// <summary>
+        /// Retourne la liste de rectangle à afficher
+        /// </summary>
+        /// <returns></returns>
         public override List<RectangleValue> afficherList()
         {
+            // Ajoute la première étape du tri avec les valeurs sous forme de rectangleValue
             for (int i = 0; i < 20; i++)
             {
                 RectangleValue rt = new RectangleValue(rectangleSprite, new Vector2(peigneState.tableauPosition[i], 350), font, positions[0].position[i], _colors[i], i);
                 rectangleValues.Add(rt);
             }
-            rectangleValues[0].IsSelected = true;
             return rectangleValues;
         }
-
+        /// <summary>
+        /// Permet de comparer la list a et la list b et de renvoyer un dictionnaire avec les différence a l'index
+        /// </summary>
+        /// <param name="a">Liste 1</param>
+        /// <param name="b">Liste 2</param>
+        /// <returns></returns>
         public override Dictionary<int, int> compareTwoList(List<int> a, List<int> b)
         {
             var differences = new Dictionary<int, int>();
@@ -81,42 +97,19 @@ namespace AlgoTri_TPI.Affichage
             }
             return differences;
         }
-
-        public override List<RectangleValue> AfficherNextPos()
-        {
-            if (currentState != peigneState.AllPosition.Count() - 1)
-            {
-                currentState++;
-            }
-            List<RectangleValue> tmpList = rectangleValues;
-            List<int> old = positions[currentState - 1].position;
-            List<int> newPos = positions[currentState].position;
-
-            Dictionary<int, int> kvp = compareTwoList(old, newPos);
-
-            foreach (var item in kvp)
-            {
-                rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
-                rectangleValues.Find(x => x.Value == item.Value).UpdatePos(peigneState.tableauPosition[item.Key]);
-
-            }
-            for (int i = 0; i < rectangleValues.Count(); i++)
-            {
-                if (i == currentState)
-                    rectangleValues[i].IsSelected = true;
-                else
-                    rectangleValues[i].IsSelected = false;
-            }
-            return rectangleValues;
-        }
-
+        /// <summary>
+        /// Retourne une List de RectangleValue avec des étapes intermediaire
+        /// </summary>
+        /// <returns>List<RectangleValues></returns>
         public override List<RectangleValue> AfficherNextPosAndState()
         {
+            //La fonction .Find() utilise du Linq pour trouver la valeur voulue
             int value1 = rectangleValues.Find(x => x.PositionIndex == compteur).Value;
             int value2 = rectangleValues.Find(x => x.PositionIndex == compteur + gapPeigne[Iteration1]).Value;
             int posIndex1 = rectangleValues.Find(x => x.PositionIndex == compteur).PositionIndex;
             int posIndex2 = rectangleValues.Find(x => x.PositionIndex == compteur + gapPeigne[Iteration1]).PositionIndex;
 
+            // Afficher les 2 valeurs qui vont être traitée
             if (peigneState.etape == 7)
             {
                 rectangleValues.Find(x=> x.PositionIndex == compteur).moveDown();
@@ -124,6 +117,7 @@ namespace AlgoTri_TPI.Affichage
             }
             else if (peigneState.etape == 8)
             {
+                //si la valeur est plus grand intervertir les 2 valeurs grace au tableau de positions 
                 if (value1 > value2)
                 {
 
@@ -134,6 +128,7 @@ namespace AlgoTri_TPI.Affichage
                     rectangleValues.Find(x => x.Value == value2).UpdatePos(peigneState.tableauPosition[rectangleValues.Find(x => x.Value == value2).PositionIndex]);
                 }
             }
+            // Faire remonter les valeurs sur la meme ligne que les autres
             else if (peigneState.etape == 9)
             {
                 rectangleValues.Find(x => x.PositionIndex == compteur).moveUp();
