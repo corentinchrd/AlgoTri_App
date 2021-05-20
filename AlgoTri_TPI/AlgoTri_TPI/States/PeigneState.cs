@@ -47,6 +47,8 @@ namespace AlgoTri_TPI.States
             peigneTri = new Tri.PeigneTri();
             AllPosition = new List<Position>();
             AllPosition = peigneTri._lp;
+            peigneTri.Random();
+            peigneTri.Sort();
             tableauPosition = new List<int>();
             etape = 1;
             //ajoute les coordonées polaire pour les rectangles dans une liste
@@ -55,10 +57,12 @@ namespace AlgoTri_TPI.States
                 tableauPosition.Add(152 + i * 45);
             }
 
-            afficherPeigne = new AfficherPeigne(rectangleSprite, buttonFont, AllPosition, this);
+            AllPosition = peigneTri._lp;
+            afficherPeigne = new AfficherPeigne(rectangleSprite, buttonFont, AllPosition, this); 
             _components = new List<Component>();
             Rectangles = new List<RectangleValue>();
 
+            afficherRectangle();
             #region Button
             Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
             {
@@ -378,9 +382,12 @@ namespace AlgoTri_TPI.States
         /// </summary>
         public void afficherRectangle()
         {
-            foreach (RectangleValue rectangle in Rectangles)
+            if (Rectangles.Count != 0)
             {
-                _components.Remove(rectangle);
+                foreach (RectangleValue rectangle in Rectangles)
+                {
+                    _components.Remove(rectangle);
+                }
             }
             Rectangles = afficherPeigne.afficherList();
             foreach (RectangleValue rectangle in Rectangles)

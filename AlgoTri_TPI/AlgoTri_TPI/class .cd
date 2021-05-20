@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="AlgoTri_TPI.Tri.BulleTri" Collapsed="true">
-    <Position X="8" Y="10" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Tri.BulleTri">
+    <Position X="8.5" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAIAABCACBAAgAAAAAAI=</HashCode>
       <FileName>Tri\BulleTri.cs</FileName>
@@ -14,84 +14,84 @@
       <FileName>Tri\Insertiontri.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Tri.PeigneTri" Collapsed="true">
-    <Position X="12.5" Y="10" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Tri.PeigneTri">
+    <Position X="12" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAABQAAAAQIAABCACBAAgAAAAACI=</HashCode>
       <FileName>Tri\PeigneTri.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Tri.SelectionTri" Collapsed="true">
-    <Position X="14.75" Y="10" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Tri.SelectionTri">
+    <Position X="13.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAIAABCACBAAgAAAAAAI=</HashCode>
       <FileName>Tri\SelectionTri.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Tri.ShellTri" Collapsed="true">
-    <Position X="17" Y="10" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Tri.ShellTri">
+    <Position X="15.5" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAQAAAAAIAABCACBAAgAAAAAAI=</HashCode>
       <FileName>Tri\ShellTri.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Tri.Tri" Collapsed="true">
-    <Position X="12.5" Y="8.75" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Tri.Tri">
+    <Position X="17.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAIAABAAABAAAAAAAAAA=</HashCode>
       <FileName>Tri\Tri.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.Affichage.AfficherPeigne" Collapsed="true">
-    <Position X="10.25" Y="7" Width="1.5" />
+    <Position X="6.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAEBAAAAAAAQAIAAAIAEAAAAIQACAAAgBAAAAEAA=</HashCode>
       <FileName>Affichage\AffichagePeigne.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.Affichage.AfficherBulle" Collapsed="true">
-    <Position X="12.5" Y="7" Width="1.5" />
+    <Position X="8.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAERAAAAAAAQAIAAAIAAAAAAIQACAAAgAAAAAEAA=</HashCode>
       <FileName>Affichage\AfficherBulle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.Affichage.AfficherInsertion" Collapsed="true">
-    <Position X="14.75" Y="7" Width="1.5" />
+    <Position X="10.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAJAAEBAAAAAAAAAIAAAIAAAAAAIQAAAAAgAAAAAEAA=</HashCode>
       <FileName>Affichage\AfficherInsertion.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Affichage.AfficherSelection" Collapsed="true">
-    <Position X="17" Y="7" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Affichage.AfficherSelection">
+    <Position X="4.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAGBAQAAAAAQAIAAAIAAAAAAIQACAAAgAAAAAFAA=</HashCode>
+      <HashCode>AAIAAEBAAAAAAAQAIAAAIAAAAAAIQACAAAgAAAAAFAA=</HashCode>
       <FileName>Affichage\AfficherSelection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.Affichage.AfficherShell" Collapsed="true">
-    <Position X="8" Y="7" Width="1.5" />
+    <Position X="5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAJAAEBAAAAAACQAIAAAIAAAQAAIQACAAAgAAAAAEAA=</HashCode>
       <FileName>Affichage\AfficherShell.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.AffichageTri" Collapsed="true">
-    <Position X="12.5" Y="5.75" Width="1.5" />
+  <Class Name="AlgoTri_TPI.AffichageTri">
+    <Position X="4.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEBAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Affichage\AffichageTri.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Component" Collapsed="true">
-    <Position X="22.5" Y="5.75" Width="1.5" />
+  <Class Name="AlgoTri_TPI.Component">
+    <Position X="24.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Component.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.EtapeImage" Collapsed="true">
+  <Class Name="AlgoTri_TPI.EtapeImage">
     <Position X="22.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAAIAAAAAAAAgAAAAAAAAAAABA=</HashCode>
@@ -99,20 +99,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AlgoTri_TPI.Game1" Collapsed="true">
-    <Position X="21.5" Y="0.75" Width="1.5" />
+    <Position X="16.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAABwAAAAAAAAAAAAAAAAACAIAAAAACABQ=</HashCode>
       <FileName>Game1.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Position" Collapsed="true">
+  <Class Name="AlgoTri_TPI.Position">
     <Position X="23.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Position.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.RectangleValue" Collapsed="true">
+  <Class Name="AlgoTri_TPI.RectangleValue">
     <Position X="20.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABQAAgARAAAIEgAgQAQAABCAAACIAIBAAAIgiEBAABA=</HashCode>
@@ -150,7 +150,7 @@
   <Class Name="AlgoTri_TPI.States.SelectionState">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAQBBAABAAgAKggIBADAAAABARgAAACIBAACABQQAAA=</HashCode>
+      <HashCode>AAQBBAABAAgCKggIBADAAAABARgAAACIBAACABQQAAA=</HashCode>
       <FileName>States\SelectionState.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -168,7 +168,7 @@
       <FileName>States\State.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AlgoTri_TPI.Controls.Button" Collapsed="true">
+  <Class Name="AlgoTri_TPI.Controls.Button">
     <Position X="24.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAwAAAAAAQAAAgAgAAAAAAAAAAqgACAEAAAACAgAAgA=</HashCode>

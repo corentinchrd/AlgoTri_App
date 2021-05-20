@@ -46,6 +46,8 @@ namespace AlgoTri_TPI.States
             EtapeList = new List<EtapeImage>();
             _selectionTri = new Tri.SelectionTri();
             AllPosition = new List<Position>();
+            _selectionTri.Random();
+            _selectionTri.Sort();
             AllPosition = _selectionTri._lp;
             tableauPosition = new List<int>();
             etape = 1;
@@ -58,6 +60,7 @@ namespace AlgoTri_TPI.States
             _afficherSelection = new AfficherSelection(_rectangleSprite, _buttonFont, AllPosition, this);
             _components = new List<Component>();
             Rectangles = new List<RectangleValue>();
+            afficherRectangle();
 
             #region Button
             Controls.Button etapeSuivante = new Controls.Button(_buttonTexture, _buttonFont)
@@ -344,10 +347,13 @@ namespace AlgoTri_TPI.States
         /// </summary>
         public void afficherRectangle()
         {
-            foreach (RectangleValue rectangle in Rectangles)
+            if (Rectangles.Count != 0)
             {
-                _components.Remove(rectangle);
-            }
+                foreach (RectangleValue rectangle in Rectangles)
+                {
+                    _components.Remove(rectangle);
+                }
+            }            
             Rectangles = _afficherSelection.afficherList();
             foreach (RectangleValue rectangle in Rectangles)
             {

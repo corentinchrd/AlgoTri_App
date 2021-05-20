@@ -141,7 +141,7 @@ namespace AlgoTri_TPI.States
         /// <param name="e"></param>
         private void AboutButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(@"C:\Users\Corentin\Desktop\TPI_Doc.pdf");
+            //System.Diagnostics.Process.Start(@"C:\Users\Corentin\Desktop\TPI_Doc.pdf");
         }
         /// <summary>
         /// Fonction appelée pour dessiner a l'ecran les objets

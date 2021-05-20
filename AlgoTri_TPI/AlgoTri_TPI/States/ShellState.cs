@@ -45,7 +45,9 @@ namespace AlgoTri_TPI.States
             buttonFont = _content.Load<SpriteFont>("Fonts/File");
             EtapeList = new List<EtapeImage>();
             shellTri = new Tri.ShellTri();
-            AllPosition = new List<Position>();
+            AllPosition = new List<Position>(); 
+            shellTri.Random();
+            shellTri.Sort();
             AllPosition = shellTri._lp;
             tableauPosition = new List<int>();
             //ajoute les coordonées polaire pour les rectangles dans une liste
@@ -57,7 +59,7 @@ namespace AlgoTri_TPI.States
             afficherShell = new AfficherShell(rectangleSprite, buttonFont, AllPosition, this);
             _components = new List<Component>();
             Rectangles = new List<RectangleValue>();
-
+            afficherRectangle();
             #region Button
             Controls.Button etapeSuivante = new Controls.Button(buttonTexture, buttonFont)
             {
