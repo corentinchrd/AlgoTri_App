@@ -304,7 +304,7 @@ namespace AlgoTri_TPI.States
                 }
             }
             spriteBatch.DrawString(_buttonFont, "Nombre d'iteration(s) :", new Vector2(15, 750), Color.Black);
-            spriteBatch.DrawString(_buttonFont, compteur.ToString(), new Vector2(215, 750), Color.Red);
+            spriteBatch.DrawString(_buttonFont, _afficherSelection.nombreDeplacement.ToString(), new Vector2(215, 750), Color.Red);
             spriteBatch.End();
         }
         /// <summary>

@@ -24,6 +24,7 @@ namespace AlgoTri_TPI.Affichage
         List<Color> _colors;
         List<Position> positions;
         BulleState bulleState;
+        public int nombreDeplacement = 0;
 
         public int currentState = 1;
         public int compteur = 0;
@@ -123,6 +124,8 @@ namespace AlgoTri_TPI.Affichage
                     rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
                     rectangleValues.Find(x => x.Value == item.Value).UpdatePos(bulleState.tableauPosition[item.Key]);
                 }
+                if(kvp.Count != 0)
+                    nombreDeplacement++;
             }
             // remettre les 2 valeurs traitée a l'Y de base
             else if (bulleState.etape == 9)

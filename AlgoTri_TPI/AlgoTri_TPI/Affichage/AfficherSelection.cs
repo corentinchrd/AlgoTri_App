@@ -28,7 +28,7 @@ namespace AlgoTri_TPI.Affichage
         public int currentState = 1;
         public int compteur = 0;
         private int Iteration = 0;
-
+        public int nombreDeplacement = 0;
 
         public AfficherSelection(Texture2D rS, SpriteFont f, List<Position> p, SelectionState ist)
         {
@@ -122,6 +122,9 @@ namespace AlgoTri_TPI.Affichage
                 {
                     rectangleValues.Find(x => x.Value == item.Value).PositionIndex = item.Key;
                     rectangleValues.Find(x => x.Value == item.Value).UpdatePos(selectionState.tableauPosition[item.Key]);
+                }
+                if (kvp.Count != 0) {
+                    nombreDeplacement++;
                 }
             }
             // Faire remonter les valeurs sur la meme ligne que les autres

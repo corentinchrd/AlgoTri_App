@@ -27,6 +27,7 @@ namespace AlgoTri_TPI.Affichage
         public List<int> gapPeigne = new List<int>() { 15, 11, 8, 6, 4, 3, 2, 1 }; //Liste des ecartements a prendre entre 2 valeurs
         public int currentState = 1; //Etape dans le tri
         public int compteur = 0; //Nombre d'étape dans le tri au total
+        public int nombreDeplacement = 0;
         private int Iteration = 0; //Nombre d'iteration pour definir le gap
 
         public int Iteration1 { get => Iteration; private set => Iteration = value; }
@@ -126,6 +127,7 @@ namespace AlgoTri_TPI.Affichage
 
                     rectangleValues.Find(x => x.Value == value1).UpdatePos(peigneState.tableauPosition[rectangleValues.Find(x => x.Value == value1).PositionIndex]);
                     rectangleValues.Find(x => x.Value == value2).UpdatePos(peigneState.tableauPosition[rectangleValues.Find(x => x.Value == value2).PositionIndex]);
+                    nombreDeplacement++;
                 }
             }
             // Faire remonter les valeurs sur la meme ligne que les autres

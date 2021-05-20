@@ -24,7 +24,7 @@ namespace AlgoTri_TPI.Affichage
         List<Color> _colors;
         List<Position> positions;
         InsertionState insertionState;
-
+        public int nombreDeplacement = 0;
         public int currentState = 1; // étape en cours dans le tri
         public AfficherInsertion(Texture2D rS, SpriteFont f, List<Position> p, InsertionState ist)
         {
@@ -124,6 +124,9 @@ namespace AlgoTri_TPI.Affichage
                         rectangleValues[insertionState.etape].PositionIndex = item.Key;
                         rectangleValues[insertionState.etape].UpdatePos(insertionState.tableauPosition[item.Key]);
                     }
+                }
+                if (kvp.Count != 0) {
+                    nombreDeplacement++;
                 }
             }
             // remettre la valeur la postion Y de base
